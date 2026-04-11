@@ -19,24 +19,37 @@ document.getElementById('top-actors').innerHTML = '<p>Cargando actores...</p>';
 
 // TOP Animes
 cargarDatos('https://api.jikan.moe/v4/top/anime?limit=5', 'top-animes', anime => `
-    <div>
-        <strong>${anime.title}</strong> - Puntuación: ${anime.score || 'N/A'} - Episodios: ${anime.episodes || 'N/A'}
+    <div class="item">
+        <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+        <div class="info">
+            <strong>${anime.title}</strong> - Score: ${anime.score || 'N/A'} - Episodes: ${anime.episodes || 'N/A'}
+            <p>${anime.synopsis ? anime.synopsis.substring(0, 500) + '...' : 'Sin descripción'}</p>
+        </div>
     </div>
     <hr>
 `);
 
 // TOP Mangas
 cargarDatos('https://api.jikan.moe/v4/top/manga?limit=5', 'top-mangas', manga => `
-    <div>
-        <strong>${manga.title}</strong> - Puntuación: ${manga.score || 'N/A'}
+    <div class="item">
+        <img src="${manga.images.jpg.image_url}" alt="${manga.title}">
+        <div class="info">
+            <strong>${manga.title}</strong> - Score: ${manga.score || 'N/A'} - Chapters: ${manga.chapters || 'N/A'}
+            <p>${manga.synopsis ? manga.synopsis.substring(0, 500) + '...' : 'Sin descripción'}</p>
+        </div>
     </div>
     <hr>
 `);
 
 // TOP Actores
 cargarDatos('https://api.jikan.moe/v4/top/people?limit=5', 'top-actors', actor => `
-    <div>
-        <strong>${actor.name}</strong> - Favoritos: ${actor.favorites || 'N/A'} 
+    <div class="item">
+        <img src="${actor.images.jpg.image_url}" alt="${actor.name}">
+        <div class="info">
+            <strong>${actor.name}</strong> - Favorites: ${actor.favorites || 'N/A'}
+        </div>
     </div>
     <hr>
 `);
+
+//nota "?" es if ":" es else "=>" es función flecha, lo podemos hacer de otra manera pero con esto el codigo queda mas corto y legible, el "||" es para mostrar "N/A" si no hay puntuación o episodios disponibles.
