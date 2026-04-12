@@ -1,11 +1,9 @@
-/* Contenedor de cada sección con flechas */
 .move-btn-container {
     display: flex;
     align-items: center;
     gap: var(--spacing-small);
 }
 
-/* Los divs donde van los animes, mangas y actores */
 #top-animes,
 #top-mangas,
 #top-actors {
@@ -15,24 +13,21 @@
     scroll-behavior: smooth;
     flex: 1;
     cursor: grab;
-    scrollbar-width: none;  /* Firefox */
+    scrollbar-width: none; 
 }
 
-/* Ocultar scroll en Chrome, Edge, Safari */
 #top-animes::-webkit-scrollbar,
 #top-mangas::-webkit-scrollbar,
 #top-actors::-webkit-scrollbar {
     display: none;
 }
 
-/* Cuando arrastran */
 #top-animes:active,
 #top-mangas:active,
 #top-actors:active {
     cursor: grabbing;
 }
 
-/* Botones de mover */
 .move-btn {
     background-color: var(--color-accent);
     color: var(--color-text);
@@ -49,7 +44,6 @@
     background-color: var(--color-highlight);
 }
 
-/* Cada item (anime, manga, actor) */
 .item {
     background-color: var(--color-card);
     border-radius: 8px;
@@ -93,7 +87,7 @@
     color: var(--color-text-dark);
     line-height: 1.4;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 3; /*parece que es un error, pero es para mantener las descripciones en 3 líneas */
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
