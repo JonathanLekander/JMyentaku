@@ -21,35 +21,36 @@ document.getElementById('top-actors').innerHTML = '<p>Cargando actores...</p>';
 cargarDatos('https://api.jikan.moe/v4/top/anime?limit=5', 'top-animes', anime => `
     <div class="item">
         <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
-        <div class="info">
-            <strong>${anime.title}</strong> - Score: ${anime.score || 'N/A'} - Episodes: ${anime.episodes || 'N/A'}
-            <p>${anime.synopsis ? anime.synopsis.substring(0, 500) + '...' : 'Sin descripción'}</p>
+        <div class="item-info">
+            <div class="item-title">${anime.title}</div>
+            <div class="item-stats">Puntuación: ${anime.score || 'N/A'} - Episodios: ${anime.episodes || 'N/A'}</div>
+            <div class="item-desc">${anime.synopsis || 'N/A'}</div>
         </div>
     </div>
-    <hr>
 `);
 
 // TOP Mangas
 cargarDatos('https://api.jikan.moe/v4/top/manga?limit=5', 'top-mangas', manga => `
     <div class="item">
         <img src="${manga.images.jpg.image_url}" alt="${manga.title}">
-        <div class="info">
-            <strong>${manga.title}</strong> - Score: ${manga.score || 'N/A'} - Chapters: ${manga.chapters || 'N/A'}
-            <p>${manga.synopsis ? manga.synopsis.substring(0, 500) + '...' : 'Sin descripción'}</p>
+        <div class="item-info">
+            <div class="item-title">${manga.title}</div>
+            <div class="item-stats">Puntuación: ${manga.score || 'N/A'}</div>
+            <div class="item-desc">${manga.synopsis || 'N/A'}</div>
         </div>
     </div>
-    <hr>
 `);
 
 // TOP Actores
 cargarDatos('https://api.jikan.moe/v4/top/people?limit=5', 'top-actors', actor => `
     <div class="item">
         <img src="${actor.images.jpg.image_url}" alt="${actor.name}">
-        <div class="info">
-            <strong>${actor.name}</strong> - Favorites: ${actor.favorites || 'N/A'}
+        <div class="item-info">
+            <div class="item-title">${actor.name}</div>
+            <div class="item-stats">Favoritos: ${actor.favorites || 'N/A'}</div>
+            <div class="item-desc">${actor.about || 'N/A'}</div>
         </div>
     </div>
-    <hr>
 `);
 
 //nota "?" es if ":" es else "=>" es función flecha, lo podemos hacer de otra manera pero con esto el codigo queda mas corto y legible, el "||" es para mostrar "N/A" si no hay puntuación o episodios disponibles.

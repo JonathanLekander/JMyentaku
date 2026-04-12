@@ -23,19 +23,26 @@
         <section id="top-content">
 
             <h2>TOP Animes</h2>
-            <div id="top-animes"> 
 
+            <div class="move-btn-container">
+                <button class="move-btn" id="prev-animes"> ‹ </button>
+                <div id="top-animes"></div>
+                <button class="move-btn" id="next-animes"> › </button>
             </div>
 
             <h2>Top Mangas</h2>
-            <div id="top-mangas"> 
-                    
+            <div class="move-btn-container">
+                <button class="move-btn" id="prev-mangas">‹</button>
+                <div id="top-mangas"></div>
+                <button class="move-btn" id="next-mangas">›</button>
             </div>
 
             <h2>Actores de Voz</h2>
-            <div id="top-actors"> 
-                
-            </div>    
+             <div class="move-btn-container">
+                <button class="move-btn" id="prev-actors">‹</button>
+                <div id="top-actors"> </div>
+                <button class="move-btn" id="next-actors">›</button>
+            </div>  
 
         </section>
     </main>
@@ -44,6 +51,7 @@
         <p>Copyright &copy; 2026</p>
     </footer>
     
-    <script src="js/fetchs.js"></script>
+    <script src="js/fetchs/homeFetch.js"></script>
+    <script src="js/events/moveBtn.js"></script>
 </body>
 </html>
