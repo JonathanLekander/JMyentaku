@@ -40,10 +40,23 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
     });
 }
 
+function setupItemClick() {
+    const items = document.querySelectorAll('.item');
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            const id = item.dataset.id;
+            const type = item.dataset.type;
+            window.location.href = `detail.html?id=${id}&type=${type}`;
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         setupMoveBtn('top-animes', 'prev-animes', 'next-animes');
         setupMoveBtn('top-mangas', 'prev-mangas', 'next-mangas');
         setupMoveBtn('top-actors', 'prev-actors', 'next-actors');
-    }, 500);
+        
+        setupItemClick();
+    }, 1000);
 });
