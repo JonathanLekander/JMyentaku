@@ -14,7 +14,6 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         container.scrollBy({ left: 300, behavior: 'smooth' });
     });
 
-    // Drag mejorado
     let isDown = false;
     let startX = 0;
     let scrollLeft = 0;
@@ -41,12 +40,11 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         const x = e.pageX;
         const walk = x - startX;
 
-        moved += Math.abs(walk); // 👈 acumulamos movimiento
+        moved += Math.abs(walk); //acumulamos movimiento
 
         container.scrollLeft = scrollLeft - walk;
     });
 
-    // 🔥 BLOQUEO REAL DEL CLICK SOLO SI ARRASTRASTE MUCHO
     container.addEventListener('click', (e) => {
         if (moved > 10) {
             e.preventDefault();
