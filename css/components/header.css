@@ -1,6 +1,6 @@
 header {
     background-color: var(--color-primary);
-    padding: var(--spacing-medium) var(--spacing-large);
+    padding: 5px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,8 +16,14 @@ nav a {
     color: var(--color-text-muted);
     text-decoration: none;
     margin-left: var(--spacing-large);
+    font-size: 14px;
 }
 
 nav a:hover {
     color: var(--color-text);
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
 }
