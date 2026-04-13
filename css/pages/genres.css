@@ -8,13 +8,13 @@
 .genres {
     display: flex;
     gap: 12px;
-    overflow: hidden; /* 👈 importante */
+    overflow: hidden; 
     scroll-behavior: smooth;
     flex: 1;
 }
 
 .genre-btn {
-    flex: 0 0 auto; /* 👈 evita que se achiquen */
+    flex: 0 0 auto;
     background-color: rgba(0, 150, 255, 0.08);
     color: var(--color-text-muted);
     padding: 8px 14px;
@@ -35,7 +35,7 @@
     box-shadow: 0 0 8px rgba(0, 150, 255, 0.4);
 }
 
-/* 🔥 Flechas */
+/* Flechas */
 .genre-arrow {
     background: none;
     border: none;
