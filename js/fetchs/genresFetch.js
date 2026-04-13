@@ -1,3 +1,57 @@
+// 👉 CARGAR ANIMES / MANGAS
+async function loadByGenre(genreId, type) {
+    const container = document.getElementById('anime-list');
+
+    if (!container) return;
+
+    try {
+        container.innerHTML = "<p>Cargando...</p>";
+
+        let url = `https://api.jikan.moe/v4/${type}`;
+
+        if (genreId) {
+            url += `?genres=${genreId}`;
+        }
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        displayItems(data.data, type);
+
+    } catch (error) {
+        container.innerHTML = "<p>Error cargando contenido</p>";
+        console.error(error);
+    }
+}
+
+// 👉 MOSTRAR CARDS
+function displayItems(items, type) {
+    const container = document.getElementById('anime-list');
+
+    container.innerHTML = "";
+
+    items.forEach(item => {
+        const card = document.createElement('div');
+        card.classList.add('item');
+
+        card.dataset.id = item.mal_id;
+        card.dataset.type = type;
+
+        card.innerHTML = `
+            <img src="${item.images.jpg.image_url}" alt="${item.title}">
+            <p>${item.title}</p>
+        `;
+
+        // 👉 reutilizás tu sistema de detail
+        card.addEventListener('click', () => {
+            window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
+        });
+
+        container.appendChild(card);
+    });
+}
+
+// 👉 CARGAR GÉNEROS
 async function loadGenres(type) {
     const container = document.getElementById('genres-container');
 
@@ -9,12 +63,21 @@ async function loadGenres(type) {
 
         container.innerHTML = "";
 
-        // 👉 botón "Todos"
+        // 🔥 BOTÓN TODOS
         const allBtn = document.createElement('div');
         allBtn.classList.add('genre-btn', 'active');
         allBtn.textContent = "Todos";
+
+        allBtn.addEventListener('click', () => {
+            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
+            allBtn.classList.add('active');
+
+            loadByGenre(null, type); // 👉 trae todos
+        });
+
         container.appendChild(allBtn);
 
+        // 🔥 GÉNEROS
         data.data.forEach(genre => {
             const btn = document.createElement('div');
             btn.classList.add('genre-btn');
@@ -24,8 +87,7 @@ async function loadGenres(type) {
                 document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                console.log("Genero seleccionado:", genre.mal_id);
-                // 👉 después acá vas a filtrar
+                loadByGenre(genre.mal_id, type); // 👉 FILTRA
             });
 
             container.appendChild(btn);
@@ -36,17 +98,6 @@ async function loadGenres(type) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const path = window.location.pathname.toLowerCase();
-
-    if (path.includes('anime')) {
-        loadGenres('anime');
-    } else if (path.includes('manga')) {
-        loadGenres('manga');
-    }
-});
-
-//mover las flechitas de generos
 function setupGenresScroll() {
     const container = document.getElementById('genres-container');
     const prev = document.getElementById('genres-prev');
@@ -54,29 +105,42 @@ function setupGenresScroll() {
 
     if (!container || !prev || !next) return;
 
+    function getScrollAmount() {
+        const firstItem = container.querySelector('.genre-btn');
+        return firstItem ? firstItem.offsetWidth + 12 : 100; 
+        // 👆 12 = gap
+    }
+
     next.addEventListener('click', () => {
-        container.scrollBy({ left: 120, behavior: 'smooth' });
+        container.scrollBy({
+            left: getScrollAmount(),
+            behavior: 'smooth'
+        });
     });
 
     prev.addEventListener('click', () => {
-        container.scrollBy({ left: -120, behavior: 'smooth' });
+        container.scrollBy({
+            left: -getScrollAmount(),
+            behavior: 'smooth'
+        });
     });
 }
 
+// 👉 INIT
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.toLowerCase();
 
     if (path.includes('anime')) {
         loadGenres('anime');
-    } else if (path.includes('manga')) {
+        loadByGenre(null, 'anime'); // 👈 carga inicial
+    } 
+    else if (path.includes('manga')) {
         loadGenres('manga');
+        loadByGenre(null, 'manga'); // 👈 carga inicial
     }
 
     setupGenresScroll();
 });
 
-if (container.scrollWidth <= container.clientWidth) {
-    prev.style.display = 'none';
-    next.style.display = 'none';
-}
+
 
