@@ -6,6 +6,7 @@
     <title>JMyentaku - Mangas</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/pages/genres.css">
 </head>
 <body>
     <header>
@@ -23,6 +24,15 @@
         </nav>
 
     </header>
+
+    <div class="genres-wrapper">
+        <button class="genre-arrow left" id="genres-prev">‹</button>
+
+        <div id="genres-container" class="genres"></div>
+
+        <button class="genre-arrow right" id="genres-next">›</button>
+    </div>
+
     <main>
 
     </main>
@@ -34,5 +44,6 @@
     <script src="../js/fetchs/homeFetch.js"></script>
     <script src="../js/events/moveBtn.js"></script>
     <script src="../js/events/navActive.js"></script>
+    <script src="../js/fetchs/genresFetch.js"></script>
 </body>
 </html>
