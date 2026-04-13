@@ -1,0 +1,19 @@
+#top-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-large);
+}
+
+#top-content h2 {
+    color: var(--color-text);
+    font-size: var(--font-size-large);
+    margin-bottom: var(--spacing-medium);
+    margin-top: var(--spacing-large);
+    padding-bottom: var(--spacing-small);
+    border-bottom: 2px solid var(--color-highlight);
+    display: inline-block;
+}
+
+#top-content h2:first-of-type {
+    margin-top: 0;
+}

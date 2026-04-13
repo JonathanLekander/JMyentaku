@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JMyentaku - Home</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+    <header> 
+        
+        <h1>JMyentaku</h1>    <!-- seguramente en vez de h1, sea un logo-->
+        
+        <nav>
+            <a href="home.html">Home</a>
+            <a href="#">Animes</a>
+            <a href="#">Mangas</a>
+        </nav>    
+
+    </header>
+
+    <main>
+        <section id="top-content">
+
+            <h2>TOP Animes</h2>
+
+            <div class="move-btn-container">
+                <button class="move-btn" id="prev-animes"> ‹ </button>
+                <div id="top-animes"></div>
+                <button class="move-btn" id="next-animes"> › </button>
+            </div>
+
+            <h2>Top Mangas</h2>
+            <div class="move-btn-container">
+                <button class="move-btn" id="prev-mangas">‹</button>
+                <div id="top-mangas"></div>
+                <button class="move-btn" id="next-mangas">›</button>
+            </div>
+
+            <h2>Best voice actors</h2>
+             <div class="move-btn-container">
+                <button class="move-btn" id="prev-actors">‹</button>
+                <div id="top-actors"> </div>
+                <button class="move-btn" id="next-actors">›</button>
+            </div>  
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2026</p>
+    </footer>
+    
+    <script src="../js/fetchs/homeFetch.js"></script>
+    <script src="../js/events/moveBtn.js"></script>
+</body>
+</html>
