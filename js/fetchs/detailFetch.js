@@ -17,47 +17,80 @@ function displayDetail(item) {
     const container = document.getElementById('detail-content');
     
     if (type === 'anime') {
+        const trailerUrl = item.trailer?.embed_url || null;
         container.innerHTML = `
-            <div class="detail">
+        <div class="detail-layout">
+            <aside class="aside-detail">
                 <img src="${item.images.jpg.large_image_url}" alt="${item.title}">
+                <div class="stats">
+                    <p><strong>Score:</strong> ${item.score || 'N/A'}</p>
+                    <p><strong>Episodes:</strong> ${item.episodes || 'N/A'}</p>
+                    <p><strong>Duration:</strong> ${item.duration || 'N/A'}</p>
+                    <p><strong>Rank:</strong> #${item.rank || 'N/A'}</p>
+                    <p><strong>Popularity:</strong> #${item.popularity || 'N/A'}</p>
+                    <p><strong>Favorites:</strong> ${item.favorites || 'N/A'}</p>
+                    <p><strong>Status:</strong> ${item.status || 'N/A'}</p>
+                    <p><strong>Year:</strong> ${item.year || 'N/A'}</p>
+                </div>
+            </aside>
+            
+            <div class="detail">
                 <h1>${item.title}</h1>
-                <p><strong>Japanese Title:</strong> ${item.title_japanese || 'N/A'}</p>
-                <p><strong>Score:</strong> ${item.score || 'N/A'}</p>
-                <p><strong>Episodes:</strong> ${item.episodes || 'N/A'}</p>
-                <p><strong>Status:</strong> ${item.status || 'N/A'}</p>
-                <p><strong>Year:</strong> ${item.year || 'N/A'}</p>
-                <p><strong>Genres:</strong> ${item.genres.map(g => g.name).join(', ')}</p>
+                <p class="japanese-title">${item.title_japanese || ''}</p>
                 <p><strong>Synopsis:</strong> ${item.synopsis || 'No synopsis available'}</p>
-                <br><br>
-                <a href="home.html">← Back to Home</a>
+                ${trailerUrl ? `
+                    <div class="trailer-container">
+                        <h3>Trailer</h3>
+                        <iframe src="${trailerUrl}"></iframe>
+                    </div>
+                ` : '<p> No trailer available</p>'}
             </div>
+        </div>
         `;}
         else if (type === 'manga') {
         container.innerHTML = `
-            <div class="detail">
+         <div class="detail-layout">
+            <aside class="aside-detail">
                 <img src="${item.images.jpg.large_image_url}" alt="${item.title}">
+                <div class="stats">
+                    <p><strong>Score:</strong> ${item.score || 'N/A'}</p>
+                    <p><strong>Volumes:</strong> ${item.volumes || 'N/A'}</p>
+                    <p><strong>Chapters:</strong> ${item.chapters || 'N/A'}</p>
+                    <p><strong>Rank:</strong> #${item.rank || 'N/A'}</p>
+                    <p><strong>Popularity:</strong> #${item.popularity || 'N/A'}</p>
+                    <p><strong>Favorites:</strong> ${item.favorites || 'N/A'}</p>
+                    <p><strong>Authors:</strong> ${item.authors?.map(a => a.name).join(', ') || 'N/A'}</p>
+                </div>
+            </aside>
+            
+            <div class="detail">
                 <h1>${item.title}</h1>
-                <p><strong>Score:</strong> ${item.score || 'N/A'}</p>
-                <p><strong>Volumes:</strong> ${item.volumes || 'N/A'}</p>
-                <p><strong>Chapters:</strong> ${item.chapters || 'N/A'}</p>
-                <p><strong>Status:</strong> ${item.status || 'N/A'}</p>
+                <p class="japanese-title">${item.title_japanese || ''}</p>
                 <p><strong>Synopsis:</strong> ${item.synopsis || 'No synopsis available'}</p>
-
-                <br><br>
-                <a href="home.html">← Back to Home</a>
+                <div class="detail-genres">
+                    <h3>Genres</h3>
+                    <p>${item.genres.map(g => g.name).join(', ') || 'N/A'}</p>
+                </div>
             </div>
+        </div>
         `;} 
         else if (type === 'people') {
         container.innerHTML = `
-            <div class="detail">
+        <div class="detail-layout">
+            <aside class="aside-detail">
                 <img src="${item.images.jpg.image_url}" alt="${item.name}">
+                <div class="stats">
+                    <p><strong>Given Name:</strong> ${item.given_name || 'N/A'}</p>
+                    <p><strong>Family Name:</strong> ${item.family_name || 'N/A'}</p>
+                    <p><strong>Favorites:</strong> ${item.favorites || 'N/A'}</p>
+                </div>
+            </aside>
+            
+            <div class="detail">
                 <h1>${item.name}</h1>
-                <p><strong>Given Name:</strong> ${item.given_name || 'N/A'}</p>
-                <p><strong>Favorites:</strong> ${item.favorites || 'N/A'}</p>
                 <p><strong>About:</strong> ${item.about || 'No biography available'}</p>
-                <br><br>
-                <a href="home.html">← Back to Home</a>
             </div>
+        </div>
         `;
     }
 }
