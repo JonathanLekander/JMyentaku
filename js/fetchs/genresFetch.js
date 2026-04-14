@@ -1,4 +1,4 @@
-// 👉 CARGAR ANIMES / MANGAS
+
 async function loadByGenre(genreId, type) {
     const container = document.getElementById('anime-list');
 
@@ -24,7 +24,7 @@ async function loadByGenre(genreId, type) {
     }
 }
 
-// 👉 MOSTRAR CARDS
+
 function displayItems(items, type) {
     const container = document.getElementById('anime-list');
 
@@ -42,7 +42,7 @@ function displayItems(items, type) {
             <p>${item.title}</p>
         `;
 
-        // 👉 reutilizás tu sistema de detail
+        
         card.addEventListener('click', () => {
             window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
         });
@@ -51,7 +51,7 @@ function displayItems(items, type) {
     });
 }
 
-// 👉 CARGAR GÉNEROS
+
 async function loadGenres(type) {
     const container = document.getElementById('genres-container');
 
@@ -63,7 +63,7 @@ async function loadGenres(type) {
 
         container.innerHTML = "";
 
-        // 🔥 BOTÓN TODOS
+        
         const allBtn = document.createElement('div');
         allBtn.classList.add('genre-btn', 'active');
         allBtn.textContent = "Todos";
@@ -72,12 +72,12 @@ async function loadGenres(type) {
             document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
             allBtn.classList.add('active');
 
-            loadByGenre(null, type); // 👉 trae todos
+            loadWithPagination(1, type, null);
         });
 
         container.appendChild(allBtn);
 
-        // 🔥 GÉNEROS
+        
         data.data.forEach(genre => {
             const btn = document.createElement('div');
             btn.classList.add('genre-btn');
@@ -87,11 +87,15 @@ async function loadGenres(type) {
                 document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                loadByGenre(genre.mal_id, type); // 👉 FILTRA
+                loadWithPagination(1, type, genre.mal_id); // 👈 🔥 PAGINADO
             });
 
             container.appendChild(btn);
         });
+
+        setTimeout(() => {
+            setupGenresScroll();
+        }, 100);
 
     } catch (error) {
         console.error("Error cargando géneros:", error);
@@ -132,14 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (path.includes('anime')) {
         loadGenres('anime');
-        loadByGenre(null, 'anime'); // 👈 carga inicial
+        loadWithPagination(1, 'anime'); // 👈 🔥 CAMBIO
     } 
     else if (path.includes('manga')) {
         loadGenres('manga');
-        loadByGenre(null, 'manga'); // 👈 carga inicial
+        loadWithPagination(1, 'manga'); // 👈 🔥 CAMBIO
     }
-
-    setupGenresScroll();
 });
 
 

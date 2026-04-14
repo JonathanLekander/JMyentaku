@@ -1,0 +1,72 @@
+/* CONTENEDOR */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 40px 0;
+}
+
+/* BOTONES GENERALES */
+.page-btn {
+    background: rgba(255,255,255,0.05);
+    border: none;
+    color: var(--color-text-muted);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+/* HOVER */
+.page-btn:hover {
+    background: rgba(0,150,255,0.2);
+    color: white;
+}
+
+/* ACTIVO */
+.page-btn.active {
+    background: rgba(0,150,255,0.4);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 0 8px rgba(0,150,255,0.4);
+}
+
+/* FLECHAS */
+.page-arrow {
+    font-size: 16px;
+    padding: 6px 10px;
+}
+
+/* DESHABILITADO */
+.page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* 👉 ANIMACIÓN SUAVE */
+.page-btn {
+    transform: scale(1);
+}
+
+.page-btn:hover {
+    transform: scale(1.08);
+}
+
+.pagination span {
+    padding: 0 5px;
+    color: var(--color-text-muted);
+}
+
+/* 👉 RESPONSIVE */
+@media (max-width: 600px) {
+    .pagination {
+        gap: 5px;
+    }
+
+    .page-btn {
+        padding: 5px 8px;
+        font-size: 12px;
+    }
+}
