@@ -87,7 +87,7 @@ async function loadGenres(type) {
                 document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                loadWithPagination(1, type, genre.mal_id); // 👈 🔥 PAGINADO
+                loadWithPagination(1, type, genre.mal_id); 
             });
 
             container.appendChild(btn);
@@ -112,7 +112,6 @@ function setupGenresScroll() {
     function getScrollAmount() {
         const firstItem = container.querySelector('.genre-btn');
         return firstItem ? firstItem.offsetWidth + 12 : 100; 
-        // 👆 12 = gap
     }
 
     next.addEventListener('click', () => {
@@ -130,17 +129,16 @@ function setupGenresScroll() {
     });
 }
 
-// 👉 INIT
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.toLowerCase();
 
     if (path.includes('anime')) {
         loadGenres('anime');
-        loadWithPagination(1, 'anime'); // 👈 🔥 CAMBIO
+        loadWithPagination(1, 'anime'); 
     } 
     else if (path.includes('manga')) {
         loadGenres('manga');
-        loadWithPagination(1, 'manga'); // 👈 🔥 CAMBIO
+        loadWithPagination(1, 'manga'); 
     }
 });
 

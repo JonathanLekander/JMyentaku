@@ -5,7 +5,6 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
 
     if (!container || !prevBtn || !nextBtn) return;
 
-    // Botones
     prevBtn.addEventListener('click', () => {
         container.scrollBy({ left: -300, behavior: 'smooth' });
     });
@@ -40,7 +39,7 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         const x = e.pageX;
         const walk = x - startX;
 
-        moved += Math.abs(walk); //acumulamos movimiento
+        moved += Math.abs(walk);
 
         container.scrollLeft = scrollLeft - walk;
     });
@@ -58,7 +57,7 @@ function setupItemClick() {
 
     items.forEach(item => {
         item.addEventListener('click', (e) => {
-            console.log("CLICK detectado"); // 👈 para debug
+            console.log("CLICK detectado");
 
             const id = item.dataset.id;
             const type = item.dataset.type;

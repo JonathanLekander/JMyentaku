@@ -2,7 +2,6 @@ let currentPage = 1;
 let currentType = 'anime';
 let currentGenre = null;
 
-// 👉 CARGAR CON PAGINACIÓN
 async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     const container = document.getElementById('anime-list');
 
@@ -33,7 +32,6 @@ async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     }
 }
 
-//render
 
 function renderPagination(pagination) {
     const container = document.getElementById('pagination');
