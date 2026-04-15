@@ -5,6 +5,7 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
 
     if (!container || !prevBtn || !nextBtn) return;
 
+    // 🔘 Botones
     prevBtn.addEventListener('click', () => {
         container.scrollBy({ left: -300, behavior: 'smooth' });
     });
@@ -13,6 +14,7 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         container.scrollBy({ left: 300, behavior: 'smooth' });
     });
 
+    // 🖱️ Drag
     let isDown = false;
     let startX = 0;
     let scrollLeft = 0;
@@ -39,40 +41,43 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         const x = e.pageX;
         const walk = x - startX;
 
-        moved += Math.abs(walk);
-
+        moved = Math.abs(walk);
         container.scrollLeft = scrollLeft - walk;
     });
 
-    container.addEventListener('click', (e) => {
-        if (moved > 10) {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    }, true);
-}
+    // 👉 guardamos el estado en el container
+    container.dataset.moved = 0;
 
-function setupItemClick() {
-    const items = document.querySelectorAll('.item');
-
-    items.forEach(item => {
-        item.addEventListener('click', (e) => {
-            console.log("CLICK detectado");
-
-            const id = item.dataset.id;
-            const type = item.dataset.type;
-
-            window.location.href = `detail.html?id=${id}&type=${type}`;
-        });
+    container.addEventListener('mousemove', () => {
+        container.dataset.moved = moved;
     });
 }
 
+function setupItemClick() {
+    document.addEventListener('click', (e) => {
+        const item = e.target.closest('.item');
+
+        if (!item) return;
+
+        console.log("CLICK detectado");
+
+        const id = item.dataset.id;
+        const type = item.dataset.type;
+
+        if (!id || !type) return;
+
+        window.location.href = `detail.html?id=${id}&type=${type}`;
+    });
+}
+
+
+// 🚀 INIT
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         setupMoveBtn('top-animes', 'prev-animes', 'next-animes');
         setupMoveBtn('top-mangas', 'prev-mangas', 'next-mangas');
         setupMoveBtn('top-actors', 'prev-actors', 'next-actors');
-        
+
         setupItemClick();
     }, 1000);
 });
