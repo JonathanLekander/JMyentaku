@@ -106,10 +106,3 @@ function displayItems(items, type) {
         container.appendChild(card);
     });
 }
-
-// Función de seguridad para evitar XSS
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
