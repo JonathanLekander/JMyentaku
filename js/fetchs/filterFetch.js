@@ -1,73 +1,86 @@
+function buildUrl(page = 1, type = 'anime') {
+    const search = document.getElementById('search-input')?.value;
+    const genre = document.getElementById('genre-select')?.value;
+    const dateSort = document.getElementById('date-sort')?.value;
+    const scoreSort = document.getElementById('score-sort')?.value;
+
+    let url = `https://api.jikan.moe/v4/${type}?page=${page}`;
+
+    if (search) url += `&q=${search}`;
+    if (genre) url += `&genres=${genre}`;
+
+    if (scoreSort) {
+        url += `&order_by=score&sort=${scoreSort}`;
+    } else if (dateSort) {
+        url += `&order_by=start_date&sort=${dateSort}`;
+    }
+
+    return url;
+}
+
+
 async function loadGenres(type) {
-    const container = document.getElementById('genres-container');
-    if (!container) return;
+    const select = document.getElementById('genre-select');
+    if (!select) return;
 
     try {
         const response = await fetch(`https://api.jikan.moe/v4/genres/${type}`);
+
+        if (response.status === 429) {
+            console.log('Rate limit genres...');
+            setTimeout(() => loadGenres(type), 500);
+            return;
+        }
+
         const data = await response.json();
 
-        container.innerHTML = '';
+        if (!data.data) return; 
 
-        const allBtn = document.createElement('div');
-        allBtn.classList.add('genre-btn', 'active');
-        allBtn.textContent = 'ALL';
-        allBtn.addEventListener('click', () => {
-            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-            allBtn.classList.add('active');
-            loadWithPagination(1, type, null);
-        });
-        container.appendChild(allBtn);
+        select.innerHTML = '<option value="">All Genres</option>';
 
-        data.data.forEach(genre => {
-            const btn = document.createElement('div');
-            btn.classList.add('genre-btn');
-            btn.textContent = genre.name;
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                loadWithPagination(1, type, genre.mal_id);
-            });
-            container.appendChild(btn);
+        data.data.forEach(g => {
+            const option = document.createElement('option');
+            option.value = g.mal_id;
+            option.textContent = g.name;
+            select.appendChild(option);
         });
 
-        setupGenresScroll();
-
-    } catch (error) {
-        console.error('Error cargando géneros:', error);
-        container.innerHTML = '<div class="error-message">Error loading genres</div>';
+    } catch (err) {
+        console.error('Error genres:', err);
     }
 }
 
-function setupGenresScroll() {
-    const container = document.getElementById('genres-container');
-    const prev = document.getElementById('genres-prev');
-    const next = document.getElementById('genres-next');
 
-    if (!container || !prev || !next) return;
+function setupFilters(type) {
+    const inputs = document.querySelectorAll('#search-input, #genre-select, #date-sort, #score-sort');
 
-    const scrollAmount = () => {
-        const firstBtn = container.querySelector('.genre-btn');
-        return firstBtn ? firstBtn.offsetWidth + 12 : 200;
-    };
-
-    next.addEventListener('click', () => {
-        container.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+    inputs.forEach(el => {
+        el.addEventListener('change', () => {
+            loadWithPagination(1, type);
+        });
     });
 
-    prev.addEventListener('click', () => {
-        container.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+    // buscador con enter
+    document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            loadWithPagination(1, type);
+        }
     });
 }
 
-// Inicializar según la página actual
+
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.toLowerCase();
 
     if (path.includes('anime')) {
         loadGenres('anime');
-        loadWithPagination(1, 'anime', null);
-    } else if (path.includes('manga')) {
+        setupFilters('anime');
+        loadWithPagination(1, 'anime');
+    }
+
+    if (path.includes('manga')) {
         loadGenres('manga');
-        loadWithPagination(1, 'manga', null);
+        setupFilters('manga');
+        loadWithPagination(1, 'manga');
     }
 });

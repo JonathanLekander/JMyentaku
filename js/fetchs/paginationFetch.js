@@ -13,10 +13,12 @@ async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     try {
         container.innerHTML = '<div class="loading-spinner"> Loading...</div>';
 
-        let url = `https://api.jikan.moe/v4/${type}?page=${page}`;
-        
-        if (genreId) {
-            url += `&genres=${genreId}`;
+        let url;
+
+        if (typeof buildUrl === 'function') {
+            url = buildUrl(page, type);
+        } else {
+            url = `https://api.jikan.moe/v4/${type}?page=${page}`;
         }
 
         const response = await fetch(url);

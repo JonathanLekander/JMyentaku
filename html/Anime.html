@@ -7,8 +7,6 @@
     <title>JMyentaku - Animes</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/pages/genres.css">
-    <link rel="stylesheet" href="../css/components/pagination.css">
 </head>
 <body>
     <header>
@@ -27,13 +25,32 @@
 
     </header>
 
-    <div class="genres-wrapper">
-        <button class="genre-arrow" id="genres-prev">‹</button>
+    <div class="filters">
 
-        <div id="genres-container" class="genres"></div>
+        <div class="filter-left">
+            <input type="text" id="search-input" placeholder="Search anime...">
+        </div>
 
-        <button class="genre-arrow" id="genres-next">›</button>
+        <div class="filter-right">
+            <select id="genre-select">
+                <option value="">All Genres</option>
+            </select>
+
+            <select id="date-sort">
+                <option value="">Date</option>
+                <option value="desc">Newest</option>
+                <option value="asc">Oldest</option>
+            </select>
+
+            <select id="score-sort">
+                <option value="">Score</option>
+                <option value="desc">desc</option>
+                <option value="asc">asc</option>
+            </select>
+        </div>
+
     </div>
+
 
     <main>
         <div id="anime-list" class="anime-grid"></div>
@@ -47,6 +64,6 @@
     <script src="../js/events/navActive.js"></script>
     <script src="../js/fetchs/paginationFetch.js"></script>
     <script src="../js/fetchs/filterFetch.js"></script>
-    
+
 </body>
 </html>
