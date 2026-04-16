@@ -94,7 +94,7 @@ function displayItems(items, type) {
         card.innerHTML = `
             <img src="${imageUrl}" alt="${title}" loading="lazy">
             <div class="item-info">
-                <div class="item-title">${escapeHtml(title)}</div>
+                <div class="item-title">${title}</div>
                 ${item.score ? `<div class="item-stats"> ✰ ${item.score}</div>` : ''}
             </div>
         `;
