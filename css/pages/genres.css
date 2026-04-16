@@ -8,13 +8,13 @@
 .genres {
     display: flex;
     gap: 12px;
-    overflow-x: scroll;        /* sigue habiendo scroll */
-    scrollbar-width: none;     /* Firefox */
+    overflow-x: scroll;        
+    scrollbar-width: none;     
     flex-wrap: nowrap;
 }
 
 .genres::-webkit-scrollbar {
-    display: none;             /* Chrome */
+    display: none;            
 }
 
 .genre-btn {
@@ -39,7 +39,6 @@
     box-shadow: 0 0 8px rgba(0, 150, 255, 0.4);
 }
 
-/* Flechas */
 .genre-arrow {
     background: rgba(255,255,255,0.05);
     border: none;
@@ -60,16 +59,16 @@
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 25px; /* 👈 espacio entre cards */
+    gap: 25px; 
     padding: 30px;
     max-width: 1200px;
    .anime-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 👈 máximo 5 */
-    gap: 25px; /* 👈 espacio entre cards */
+    grid-template-columns: repeat(5, 1fr); 
+    gap: 25px; 
     padding: 30px;
     max-width: 1200px;
-    margin: 0 auto; /* 👈 centra todo */
+    margin: 0 auto; 
 }
 }
 .item {
@@ -88,7 +87,7 @@
 .item img {
     width: 100%;
     height: 250px;
-    object-fit: cover; /* 👈 evita deformación */
+    object-fit: cover;
     border-radius: 10px;
 }
 

@@ -4,7 +4,6 @@ let currentGenre = null;
 
 async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     const container = document.getElementById('anime-list');
-
     if (!container) return;
 
     currentPage = page;
@@ -12,93 +11,105 @@ async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     currentGenre = genreId;
 
     try {
-        container.innerHTML = "<p>Cargando...</p>";
+        container.innerHTML = '<div class="loading-spinner"> Loading...</div>';
 
         let url = `https://api.jikan.moe/v4/${type}?page=${page}`;
-
+        
         if (genreId) {
             url += `&genres=${genreId}`;
         }
 
         const response = await fetch(url);
-        const data = await response.json();
+        
+        if (response.status === 429) {
+            container.innerHTML = '<div class="error-message"> Too many requests. Please wait 2 seconds...</div>';
+            setTimeout(() => loadWithPagination(page, type, genreId), 2000);
+            return;
+        }
 
+        const data = await response.json();
         displayItems(data.data, type);
-        renderPagination(data.pagination);
+        renderPaginationFromAPI(data.pagination);
 
     } catch (error) {
-        container.innerHTML = "<p>Error</p>";
-        console.error(error);
+        console.error('Error:', error);
+        container.innerHTML = '<div class="error-message"> Error loading data...</div>';
     }
 }
 
-
-function renderPagination(pagination) {
+function renderPaginationFromAPI(pagination) {
     const container = document.getElementById('pagination');
     if (!container) return;
 
-    container.innerHTML = "";
+    container.innerHTML = '';
 
-    const totalPages = pagination.last_visible_page;
-
-    // flecha
-    const prev = document.createElement('button');
-    prev.classList.add('page-btn', 'page-arrow');
-    prev.innerHTML = '‹';
-    prev.disabled = currentPage === 1;
-
-    prev.addEventListener('click', () => {
-        loadWithPagination(currentPage - 1, currentType, currentGenre);
-    });
-
-    container.appendChild(prev);
-
-    
-    for (let i = 1; i <= Math.min(3, totalPages); i++) {
-        const btn = createPageButton(i);
-        container.appendChild(btn);
+    if (pagination.current_page > 1) {
+        const prevBtn = document.createElement('button');
+        prevBtn.textContent = ' < prev ';
+        prevBtn.classList.add('page-btn', 'page-prev');
+        prevBtn.addEventListener('click', () => {
+            loadWithPagination(currentPage - 1, currentType, currentGenre);
+        });
+        container.appendChild(prevBtn);
     }
 
-    //si hay muchas paginas
-    if (totalPages > 4) {
-        const dots = document.createElement('span');
-        dots.textContent = "...";
-        dots.style.color = "#888";
-        container.appendChild(dots);
+    // pag actual
+    const pageInfo = document.createElement('span');
+    pageInfo.textContent = `page ${pagination.current_page}`;
+    pageInfo.classList.add('page-info');
+    container.appendChild(pageInfo);
+
+
+    if (pagination.has_next_page) {
+        const nextBtn = document.createElement('button');
+        nextBtn.textContent = ' next >';
+        nextBtn.classList.add('page-btn', 'page-next');
+        nextBtn.addEventListener('click', () => {
+            loadWithPagination(currentPage + 1, currentType, currentGenre);
+        });
+        container.appendChild(nextBtn);
     }
-
-    // ultima pagina
-    if (totalPages > 3) {
-        const lastBtn = createPageButton(totalPages);
-        container.appendChild(lastBtn);
-    }
-
-    // flecha
-    const next = document.createElement('button');
-    next.classList.add('page-btn', 'page-arrow');
-    next.innerHTML = '›';
-    next.disabled = currentPage === totalPages;
-
-    next.addEventListener('click', () => {
-        loadWithPagination(currentPage + 1, currentType, currentGenre);
-    });
-
-    container.appendChild(next);
 }
 
-function createPageButton(page) {
-    const btn = document.createElement('button');
-    btn.classList.add('page-btn');
-    btn.textContent = page;
+function displayItems(items, type) {
+    const container = document.getElementById('anime-list');
+    if (!container) return;
 
-    if (page === currentPage) {
-        btn.classList.add('active');
+    if (!items || items.length === 0) {
+        container.innerHTML = '<div class="empty-message">No items found</div>';
+        return;
     }
 
-    btn.addEventListener('click', () => {
-        loadWithPagination(page, currentType, currentGenre);
-    });
+    container.innerHTML = '';
 
-    return btn;
+    items.forEach(item => {
+        const card = document.createElement('div');
+        card.classList.add('item');
+        card.dataset.id = item.mal_id;
+        card.dataset.type = type;
+
+        const title = item.title || item.name || 'N/A';
+        const imageUrl = item.images?.jpg?.image_url || '../Images/placeholder.jpg';
+
+        card.innerHTML = `
+            <img src="${imageUrl}" alt="${title}" loading="lazy">
+            <div class="item-info">
+                <div class="item-title">${escapeHtml(title)}</div>
+                ${item.score ? `<div class="item-stats"> ✰ ${item.score}</div>` : ''}
+            </div>
+        `;
+
+        card.addEventListener('click', () => {
+            window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
+        });
+
+        container.appendChild(card);
+    });
 }
 
+// Función de seguridad para evitar XSS
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}

@@ -35,7 +35,7 @@ cargarDatos('https://api.jikan.moe/v4/top/manga?limit=5', 'top-mangas', manga =>
         <img src="${manga.images.jpg.image_url}" alt="${manga.title}">
         <div class="item-info">
             <div class="item-title">${manga.title}</div>
-            <div class="item-stats">Puntuación: ${manga.score || 'N/A'}</div>
+            <div class="item-stats">Score: ${manga.score || 'N/A'}</div>
             <div class="item-desc">${manga.synopsis || 'N/A'}</div>
         </div>
     </div>
@@ -47,7 +47,7 @@ cargarDatos('https://api.jikan.moe/v4/top/people?limit=5', 'top-actors', actor =
         <img src="${actor.images.jpg.image_url}" alt="${actor.name}">
         <div class="item-info">
             <div class="item-title">${actor.name}</div>
-            <div class="item-stats">Favoritos: ${actor.favorites || 'N/A'}</div>
+            <div class="item-stats">Favorites: ${actor.favorites || 'N/A'}</div>
             <div class="item-desc">${actor.about || 'N/A'}</div>
         </div>
     </div>
