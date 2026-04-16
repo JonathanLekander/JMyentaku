@@ -17,16 +17,15 @@ nav a {
     text-decoration: none;
     margin-left: var(--spacing-large);
     font-size: 14px;
-}
 
-nav a:hover {
-    color: var(--color-text);
-}
-nav a {
     position: relative;
     padding: 6px 12px;
     border-radius: 8px;
     transition: all 0.3s ease;
+}
+
+nav a:hover {
+    color: var(--color-text);
 }
 
 nav a:hover {
