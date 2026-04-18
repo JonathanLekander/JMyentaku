@@ -13,7 +13,7 @@ async function loadFavorites() {
     if (favorites.length === 0) {
         container.innerHTML = `
             <div class="empty-message">
-                ⭐ Aún no hay favoritos
+                ⭐ There are not favorites yet! ⭐
             </div>
         `;
         return;
@@ -50,7 +50,7 @@ async function loadFavorites() {
         if (results.length === 0) {
             container.innerHTML = `
                 <div class="empty-message">
-                    No se pudieron cargar favoritos
+                    Favorites could not be loaded. Please try again later.
                 </div>
             `;
             return;
@@ -81,7 +81,7 @@ async function loadFavorites() {
         console.error(error);
         container.innerHTML = `
             <div class="error-message">
-                Error cargando favoritos
+                Error loading favorites. Please try again later.
             </div>
         `;
     }
