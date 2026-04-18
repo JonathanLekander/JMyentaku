@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/pages/contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <header> 
@@ -28,43 +29,61 @@
 
     </header>
 
-    <main class="contact-container">
+    <main class="contact-alt">
 
-        <section class="dev-cards">
+        <!-- 🧠 HEADER -->
+        <section class="contact-header">
+            <h1>Contacto</h1>
+            <p>Conocé a los desarrolladores detrás del proyecto</p>
+        </section>
 
-            <div class="dev-card">
+        <!-- 👥 DESARROLLADORES -->
+        <section class="dev-section">
+
+            <div class="dev">
                 <div class="avatar">J</div>
                 <h3>Jonathan Lekander</h3>
+                <span>Analista programador universitario</span>
             </div>
 
-            <div class="dev-card">
+            <div class="dev">
                 <div class="avatar">M</div>
                 <h3>Melina Cora</h3>
+                <span>FullStack Developer</span>
             </div>
 
         </section>
 
-        <section class="contact-info">
+        <!-- 📌 INFO -->
+        <section class="info-lines">
 
-            <div class="info-card">
-                <h3>Acerca de nosotros</h3>
-                <p>Proyecto desarrollado como parte de aprendizaje en desarrollo web.</p>
-                <p>
-                    <br>
-                    <a href="#">Jonathan</a><br>
-                    <a href="#">Melina</a>
-                </p>
+            <div class="line">
+                <i class="fa-solid fa-user-group"></i>
+                <div>
+                    <strong>Acerca de nosotros</strong>
+                    <p>
+                        Proyecto académico de desarrollo web.<br>
+                        <i class="fa-brands fa-github"></i>
+                        <a href="#">Jonathan</a> · 
+                        <a href="#">Melina</a>
+                    </p>
+                </div>
             </div>
 
-            <div class="info-card">
-                <h3>Teléfonos</h3>
-                <p>📞 Jonathan: 1234-5678</p>
-                <p>📞 Melina: 8765-4321</p>
+            <div class="line">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <strong>Teléfonos</strong>
+                    <p>Jonathan: 1234-5678 · Melina: 8765-4321</p>
+                </div>
             </div>
 
-            <div class="info-card">
-                <h3>Ubicación</h3>
-                <p>📍 Universidad Nacional Arturo Jauretche</p>
+            <div class="line">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <strong>Ubicación</strong>
+                    <p>Universidad Nacional Arturo Jauretche</p>
+                </div>
             </div>
 
         </section>
