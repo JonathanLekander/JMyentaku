@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding: 10px 20px;
+    padding: 10px 0px;
 }
 
 .genres {
@@ -63,8 +63,9 @@
     padding: 30px;
     max-width: 1200px;
     margin: 0 auto;
-      justify-content: center; 
+    justify-content: center; 
 }
+
 .item {
     background-color: rgba(255,255,255,0.03);
     border-radius: 12px;

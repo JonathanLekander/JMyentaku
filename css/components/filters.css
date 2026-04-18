@@ -1,13 +1,38 @@
 .filters {
     display: flex;
-    gap: 12px;
-    padding: 20px;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    gap: 20px;
+    padding: 20px 0px;
+    flex-wrap: wrap;
+    max-width: 1200px;     
+    margin: 0 auto;       
+    width: 100%;
+}
+
+.filter-left {
+    flex: 0 1 auto;
+}
+
+.filter-left input {
+    width: 280px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+    color: var(--color-text);
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.filter-right {
+    display: flex;
+    gap: 12px;
+    flex-shrink: 0;
     flex-wrap: wrap;
 }
 
-/* Inputs y selects */
 .filters input,
 .filters select {
     padding: 10px 14px;
@@ -17,42 +42,26 @@
     color: var(--color-text);
     font-size: 14px;
     outline: none;
-
-    /* transición suave */
     transition: all 0.2s ease;
 }
 
-/* Hover (cuando pasás el mouse) */
 .filters input:hover,
 .filters select:hover {
     border-color: var(--color-highlight);
     background: var(--color-card-hover);
 }
 
-/* Focus (cuando hacés click) */
 .filters input:focus,
 .filters select:focus {
     border-color: var(--color-highlight);
     box-shadow: 0 0 0 2px rgba(59, 91, 165, 0.3);
 }
 
-/* Placeholder más suave */
 .filters input::placeholder {
     color: var(--color-text-muted);
 }
 
-/* Select más prolijo */
 .filters select {
     cursor: pointer;
 }
 
-/* Opcional: animación leve */
-.filters input,
-.filters select {
-    transform: scale(1);
-}
-
-.filters input:focus,
-.filters select:focus {
-    transform: scale(1.03);
-}
