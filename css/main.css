@@ -2,8 +2,11 @@
 @import url('components/header.css');
 @import url('components/cards.css');
 @import url('components/footer.css');
+@import url('components/filters.css');
+@import url('components/pagination.css');
 @import url('pages/home.css');
 @import url('pages/detail.css');
+@import url('pages/genres.css');
 
 * {
     margin: 0;

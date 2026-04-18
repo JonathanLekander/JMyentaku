@@ -13,7 +13,6 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         container.scrollBy({ left: 300, behavior: 'smooth' });
     });
 
-    // 🖱️ Drag
     let isDown = false;
     let startX = 0;
     let scrollLeft = 0;
@@ -44,6 +43,10 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         container.scrollLeft = scrollLeft - walk;
     });
 
+<<<<<<< HEAD
+=======
+    // state en el container
+>>>>>>> abe2705f27052de625dad1647601d8c99f4a5d51
     container.dataset.moved = 0;
 
     container.addEventListener('mousemove', () => {

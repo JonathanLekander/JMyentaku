@@ -1,146 +1,86 @@
+function buildUrl(page = 1, type = 'anime') {
+    const search = document.getElementById('search-input')?.value;
+    const genre = document.getElementById('genre-select')?.value;
+    const dateSort = document.getElementById('date-sort')?.value;
+    const scoreSort = document.getElementById('score-sort')?.value;
 
-async function loadByGenre(genreId, type) {
-    const container = document.getElementById('anime-list');
+    let url = `https://api.jikan.moe/v4/${type}?page=${page}`;
 
-    if (!container) return;
+    if (search) url += `&q=${search}`;
+    if (genre) url += `&genres=${genre}`;
 
-    try {
-        container.innerHTML = "<p>Cargando...</p>";
-
-        let url = `https://api.jikan.moe/v4/${type}`;
-
-        if (genreId) {
-            url += `?genres=${genreId}`;
-        }
-
-        const response = await fetch(url);
-        const data = await response.json();
-
-        displayItems(data.data, type);
-
-    } catch (error) {
-        container.innerHTML = "<p>Error cargando contenido</p>";
-        console.error(error);
+    if (scoreSort) {
+        url += `&order_by=score&sort=${scoreSort}`;
+    } else if (dateSort) {
+        url += `&order_by=start_date&sort=${dateSort}`;
     }
-}
 
-
-function displayItems(items, type) {
-    const container = document.getElementById('anime-list');
-
-    container.innerHTML = "";
-
-    items.forEach(item => {
-        const card = document.createElement('div');
-        card.classList.add('item');
-
-        card.dataset.id = item.mal_id;
-        card.dataset.type = type;
-
-        card.innerHTML = `
-            <img src="${item.images.jpg.image_url}" alt="${item.title}">
-            <p>${item.title}</p>
-        `;
-
-        
-        card.addEventListener('click', () => {
-            window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
-        });
-
-        container.appendChild(card);
-    });
+    return url;
 }
 
 
 async function loadGenres(type) {
-    const container = document.getElementById('genres-container');
-
-    if (!container) return;
+    const select = document.getElementById('genre-select');
+    if (!select) return;
 
     try {
         const response = await fetch(`https://api.jikan.moe/v4/genres/${type}`);
+
+        if (response.status === 429) {
+            console.log('Rate limit genres...');
+            setTimeout(() => loadGenres(type), 500);
+            return;
+        }
+
         const data = await response.json();
 
-        container.innerHTML = "";
+        if (!data.data) return; 
 
-        
-        const allBtn = document.createElement('div');
-        allBtn.classList.add('genre-btn', 'active');
-        allBtn.textContent = "Todos";
+        select.innerHTML = '<option value="">All Genres</option>';
 
-        allBtn.addEventListener('click', () => {
-            document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-            allBtn.classList.add('active');
-
-            loadWithPagination(1, type, null);
+        data.data.forEach(g => {
+            const option = document.createElement('option');
+            option.value = g.mal_id;
+            option.textContent = g.name;
+            select.appendChild(option);
         });
 
-        container.appendChild(allBtn);
-
-        
-        data.data.forEach(genre => {
-            const btn = document.createElement('div');
-            btn.classList.add('genre-btn');
-            btn.textContent = genre.name;
-
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.genre-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                loadWithPagination(1, type, genre.mal_id); 
-            });
-
-            container.appendChild(btn);
-        });
-
-        setTimeout(() => {
-            setupGenresScroll();
-        }, 100);
-
-    } catch (error) {
-        console.error("Error cargando géneros:", error);
+    } catch (err) {
+        console.error('Error genres:', err);
     }
 }
 
-function setupGenresScroll() {
-    const container = document.getElementById('genres-container');
-    const prev = document.getElementById('genres-prev');
-    const next = document.getElementById('genres-next');
 
-    if (!container || !prev || !next) return;
+function setupFilters(type) {
+    const inputs = document.querySelectorAll('#search-input, #genre-select, #date-sort, #score-sort');
 
-    function getScrollAmount() {
-        const firstItem = container.querySelector('.genre-btn');
-        return firstItem ? firstItem.offsetWidth + 12 : 100; 
-    }
-
-    next.addEventListener('click', () => {
-        container.scrollBy({
-            left: getScrollAmount(),
-            behavior: 'smooth'
+    inputs.forEach(el => {
+        el.addEventListener('change', () => {
+            loadWithPagination(1, type);
         });
     });
 
-    prev.addEventListener('click', () => {
-        container.scrollBy({
-            left: -getScrollAmount(),
-            behavior: 'smooth'
-        });
+    // buscador con enter
+    document.getElementById('search-input')?.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            loadWithPagination(1, type);
+        }
     });
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.toLowerCase();
 
     if (path.includes('anime')) {
         loadGenres('anime');
-        loadWithPagination(1, 'anime'); 
-    } 
-    else if (path.includes('manga')) {
+        setupFilters('anime');
+        loadWithPagination(1, 'anime');
+    }
+
+    if (path.includes('manga')) {
         loadGenres('manga');
-        loadWithPagination(1, 'manga'); 
+        setupFilters('manga');
+        loadWithPagination(1, 'manga');
     }
 });
-
-
-
