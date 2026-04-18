@@ -1,0 +1,79 @@
+.contact-container {
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* 🔹 Cards superiores */
+.dev-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.dev-card {
+    background: var(--color-card);
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    width: 200px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.dev-card:hover {
+    transform: translateY(-5px);
+    background: var(--color-card-hover);
+}
+
+/* Avatar (iniciales) */
+.avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: var(--color-highlight);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: white;
+}
+
+/* 🔹 Secciones inferiores */
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    background: var(--color-secondary);
+    padding: 20px;
+    border-radius: 16px;
+    width: 250px;
+    border: 1px solid var(--color-border);
+    transition: 0.2s ease;
+}
+
+.info-card:hover {
+    transform: scale(1.03);
+}
+
+.info-card h3 {
+    margin-bottom: 10px;
+    color: var(--color-highlight);
+}
+
+.info-card a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.info-card a:hover {
+    text-decoration: underline;
+}
