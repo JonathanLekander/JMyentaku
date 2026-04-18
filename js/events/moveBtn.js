@@ -5,7 +5,6 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
 
     if (!container || !prevBtn || !nextBtn) return;
 
-    // 🔘 Botones
     prevBtn.addEventListener('click', () => {
         container.scrollBy({ left: -300, behavior: 'smooth' });
     });
@@ -45,7 +44,6 @@ function setupMoveBtn(containerId, prevBtnId, nextBtnId) {
         container.scrollLeft = scrollLeft - walk;
     });
 
-    // 👉 guardamos el estado en el container
     container.dataset.moved = 0;
 
     container.addEventListener('mousemove', () => {
@@ -70,8 +68,6 @@ function setupItemClick() {
     });
 }
 
-
-// 🚀 INIT
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         setupMoveBtn('top-animes', 'prev-animes', 'next-animes');
