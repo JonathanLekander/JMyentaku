@@ -122,19 +122,20 @@ function displayItems(items, type) {
 
 //click fav
 document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("fav-btn")) {
-        
+    const btn = e.target.closest(".fav-btn");
+
+    if (btn) {
         e.stopPropagation();
 
-        const id = e.target.dataset.id;
+        const id = btn.dataset.id;
         let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
         if (favorites.includes(id)) {
             favorites = favorites.filter(f => f !== id);
-            e.target.classList.remove("active");
+            btn.classList.remove("active");
         } else {
             favorites.push(id);
-            e.target.classList.add("active");
+            btn.classList.add("active");
         }
 
         localStorage.setItem("favorites", JSON.stringify(favorites));

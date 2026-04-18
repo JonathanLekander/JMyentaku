@@ -6,9 +6,10 @@ function getFavorites() {
 
 async function loadFavorites() {
     const container = document.getElementById("favorites-list");
+    if (!container) return; // 
+
     const favorites = getFavorites();
 
-    
     if (favorites.length === 0) {
         container.innerHTML = `
             <div class="empty-message">
@@ -21,18 +22,43 @@ async function loadFavorites() {
     container.innerHTML = "<div>Loading...</div>";
 
     try {
-        const promises = favorites.map(id =>
-            fetch(`https://api.jikan.moe/v4/anime/${id}`)
-                .then(res => res.json())
-        );
+        const results = [];
 
-        const results = await Promise.all(promises);
+        for (let id of favorites) {
+            try {
+                const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+
+                if (!res.ok) {
+                    console.log("ID inválido:", id);
+                    continue;
+                }
+
+                const data = await res.json();
+
+                if (!data.data) continue;
+
+                results.push(data.data);
+
+                // ⏱ evitar 429
+                await new Promise(r => setTimeout(r, 300));
+
+            } catch (err) {
+                console.log("Error con ID:", id);
+            }
+        }
+
+        if (results.length === 0) {
+            container.innerHTML = `
+                <div class="empty-message">
+                    No se pudieron cargar favoritos
+                </div>
+            `;
+            return;
+        }
 
         container.innerHTML = "";
 
-        results.forEach(res => {
-            const anime = res.data;
-
+        results.forEach(anime => { 
             const card = document.createElement("div");
             card.classList.add("item");
 
