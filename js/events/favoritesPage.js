@@ -39,7 +39,7 @@ async function loadFavorites() {
 
                 results.push(data.data);
 
-                // ⏱ evitar 429
+          
                 await new Promise(r => setTimeout(r, 300));
 
             } catch (err) {

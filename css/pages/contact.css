@@ -7,7 +7,6 @@
     gap: 50px;
 }
 
-/* 🔹 header */
 .contact-header {
     text-align: center;
 }
@@ -21,7 +20,6 @@
     color: var(--color-text-muted);
 }
 
-/* 🔹 devs */
 .dev-section {
     display: flex;
     justify-content: center;
@@ -38,7 +36,6 @@
     transform: translateY(-5px);
 }
 
-/* avatar */
 .avatar {
     width: 80px;
     height: 80px;
@@ -53,23 +50,20 @@
     color: white;
 }
 
-/* nombre */
 .dev h3 {
     font-size: 16px;
 }
 
-/* rol */
 .dev span {
     font-size: 13px;
     color: var(--color-text-muted);
 }
 
-/* 🔹 info tipo líneas */
 .info-lines {
     display: flex;
     justify-content: center;
     gap: 20px;
-    flex-wrap: wrap; /* 🔥 clave para responsive */
+    flex-wrap: wrap; 
 }
 
 .line {
@@ -77,7 +71,7 @@
     gap: 12px;
     align-items: flex-start;
 
-    width: 250px; /* 👈 ancho fijo para alinearlos prolijo */
+    width: 250px; 
     padding: 20px;
 
     border-radius: 12px;
@@ -88,20 +82,20 @@
     transition: 0.3s ease;
 }
 
-/* hover más moderno */
+
 .line:hover {
     transform: translateY(-5px);
     background: rgba(255,255,255,0.05);
 }
 
-/* iconos */
+
 .line i {
     font-size: 18px;
     color: var(--color-highlight);
     margin-top: 3px;
 }
 
-/* texto */
+
 .line strong {
     display: block;
     margin-bottom: 5px;
@@ -112,7 +106,7 @@
     font-size: 14px;
 }
 
-/* links */
+
 .line a {
     color: var(--color-text);
     text-decoration: none;

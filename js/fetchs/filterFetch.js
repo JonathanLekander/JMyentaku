@@ -60,7 +60,7 @@ function setupFilters(type) {
         });
     });
 
-    // buscador con enter
+   
     document.getElementById('search-input')?.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             loadWithPagination(1, type);
