@@ -123,10 +123,11 @@ function displayItems(items, type) {
 //click fav
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("fav-btn")) {
+        
         e.stopPropagation();
 
         const id = e.target.dataset.id;
-        let favorites = getFavorites();
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
         if (favorites.includes(id)) {
             favorites = favorites.filter(f => f !== id);
@@ -136,6 +137,6 @@ document.addEventListener("click", (e) => {
             e.target.classList.add("active");
         }
 
-        saveFavorites(favorites);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
     }
 });
