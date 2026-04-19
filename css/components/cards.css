@@ -53,6 +53,7 @@
     max-width: 280px;
     flex-shrink: 0;
     user-select: none;
+     position: relative;
 }
 
 .item img {
@@ -100,7 +101,7 @@
     border: none;
     font-size: 20px;
     cursor: pointer;
-    color: white;
+    color: var(--color-white);
     transition: transform 0.2s, color 0.2s;
 }
 
@@ -110,5 +111,5 @@
 
 /* Cuando está en favoritos */
 .fav-btn.active {
-    color: gold;
+    color: var(--color-star);
 }
