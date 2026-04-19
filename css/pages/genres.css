@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding: 10px 20px;
+    padding: 10px 0px;
 }
 
 .genres {
@@ -55,22 +55,17 @@
     color: white;
 }
 
-/*cards*/
+
 .anime-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px; 
     padding: 30px;
     max-width: 1200px;
-   .anime-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 25px; 
-    padding: 30px;
-    max-width: 1200px;
-    margin: 0 auto; 
+    margin: 0 auto;
+    justify-content: center; 
 }
-}
+
 .item {
     background-color: rgba(255,255,255,0.03);
     border-radius: 12px;
@@ -91,7 +86,7 @@
     border-radius: 10px;
 }
 
-/*Responsivo*/
+
 @media (max-width: 1200px) {
     .anime-grid {
         grid-template-columns: repeat(4, 1fr);
