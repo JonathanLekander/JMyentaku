@@ -1,8 +1,10 @@
+import { getFavorites, toggleFavorite, isFavorite } from '../storage/favoriteStorage.js';
+
 let currentPage = 1;
 let currentType = 'anime';
 let currentGenre = null;
 
-async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
+export async  function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     const container = document.getElementById('anime-list');
     if (!container) return;
 
@@ -84,7 +86,7 @@ function displayItems(items, type) {
 
     container.innerHTML = '';
 
-    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const favorites = getFavorites(type);
 
     items.forEach(item => {
         const card = document.createElement('div');
@@ -100,7 +102,7 @@ function displayItems(items, type) {
         card.innerHTML = `
             <img src="${imageUrl}" alt="${title}" loading="lazy">
 
-            <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${item.mal_id}">
+            <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${item.mal_id}" data-type="${type}">
                 ☆
             </button>
 
@@ -128,16 +130,16 @@ document.addEventListener("click", (e) => {
         e.stopPropagation();
 
         const id = btn.dataset.id;
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-        if (favorites.includes(id)) {
-            favorites = favorites.filter(f => f !== id);
-            btn.classList.remove("active");
-        } else {
-            favorites.push(id);
+        const type = btn.dataset.type;  
+        
+        if (!type) return;  
+        
+        const isNowFavorite = toggleFavorite(type, id);
+        
+        if (isNowFavorite) {
             btn.classList.add("active");
+        } else {
+            btn.classList.remove("active");
         }
-
-        localStorage.setItem("favorites", JSON.stringify(favorites));
     }
 });
