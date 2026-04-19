@@ -1,6 +1,6 @@
 import { loadWithPagination } from '../fetchs/paginationFetch.js';
 
-function buildUrl(page = 1, type = 'anime') {
+export function buildUrl(page = 1, type = 'anime') {
     const search = document.getElementById('search-input')?.value;
     const genre = document.getElementById('genre-select')?.value;
     const dateSort = document.getElementById('date-sort')?.value;

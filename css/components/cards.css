@@ -53,7 +53,7 @@
     max-width: 280px;
     flex-shrink: 0;
     user-select: none;
-     position: relative;
+    position: relative;
 }
 
 .item img {

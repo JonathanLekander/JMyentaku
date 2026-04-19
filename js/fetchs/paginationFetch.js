@@ -1,4 +1,5 @@
 import { getFavorites, toggleFavorite, isFavorite } from '../storage/favoriteStorage.js';
+import { buildUrl } from './filterFetch.js';
 
 let currentPage = 1;
 let currentType = 'anime';
