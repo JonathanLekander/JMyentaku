@@ -104,7 +104,7 @@ function displayItems(items, type) {
             <img src="${imageUrl}" alt="${title}" loading="lazy">
 
             <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${item.mal_id}" data-type="${type}">
-                ☆
+              ★
             </button>
 
             <div class="item-info">

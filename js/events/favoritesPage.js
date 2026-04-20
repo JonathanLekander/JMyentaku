@@ -7,7 +7,7 @@ let currentTypeFilter = 'all';
 document.addEventListener("DOMContentLoaded", () => {
     loadFavorites();
     
-    
+    //local filters
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
             filterAndDisplayFavorites();
         });
     }
-    
     
     const typeFilter = document.getElementById('type-filter');
     if (typeFilter) {
@@ -90,6 +89,7 @@ async function loadFavorites() {
     }
 }
 
+//local 
 function filterAndDisplayFavorites() {
     const container = document.getElementById("favorites-list");
     

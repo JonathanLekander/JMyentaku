@@ -43,3 +43,29 @@ nav a.active {
     height: 50px;
     width: auto;
 }
+
+
+nav a i {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+
+.search-wrapper {
+    position: relative;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-muted);
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.search-wrapper input {
+    padding-left: 35px;
+}
+

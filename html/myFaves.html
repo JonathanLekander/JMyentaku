@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="icon" href="../Images/Logo/favicon.ico">
     <title> JMyentaku - My Faves </title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="../css/main.css">
+
 </head>
+
 <body>
     <header>
         
@@ -18,19 +23,23 @@
         </div>
         
         <nav>
-            <a href="index.html">Home</a>
-            <a href="anime.html">Animes</a>
-            <a href="manga.html">Mangas</a>
-            <a href="myFaves.html"> My faves</a>
-            <a href="contact.html">Contact</a>
+            <a href="index.html"><i class="fas fa-home"></i> <span>Home</span></a>
+            <a href="anime.html"><i class="fas fa-film"></i> <span>Animes</span></a>
+            <a href="manga.html"><i class="fas fa-book-open"></i> <span>Mangas</span></a>
+            <a href="myFaves.html"><i class="fas fa-star"></i> <span>My Faves</span></a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> <span>Contact</span></a>
         </nav>        
 
     </header>
 
     <div class="filters">
         <div class="filter-left">
-            <input type="text" id="search-input" placeholder="Search in favorites...">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search in favorites...">
+            </div>
         </div>
+
         <div class="filter-right">
             <select id="type-filter">
                 <option value="all">All Types</option>
