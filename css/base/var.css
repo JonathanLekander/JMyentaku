@@ -11,6 +11,11 @@
     --color-border: #1f2a3e;
     --color-divider: #1e2a3a;
     --color-bg: #121212;
+
+    --color-star: gold;
+    --color-white: white; 
+    --color-heart: #e25555;
+    --color-book: #4a90e2;
     
     --font-family: 'Poppins', sans-serif;
     --font-size-base: 16px;
