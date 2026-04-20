@@ -17,3 +17,39 @@
 #top-content h2:first-of-type {
     margin-top: 0;
 }
+
+/*icon*/
+.item-stats i {
+    margin-right: 4px;
+    font-size: 12px;
+}
+
+.item-stats i.fa-star {
+    color: var(--color-star);
+}
+
+.item-stats i.fa-play-circle {
+    color: var(--color-highlight);
+}
+
+.item-stats i.fa-heart {
+    color: var(--color-heart);
+}
+
+
+.item-stats i:first-child {
+    margin-right: 4px;
+}
+
+.item-stats i + i {
+    margin-left: 12px;
+}
+
+.item-stats i.fa-book {
+    color: var(--color-book);
+}
+
+.item-stats i.fa-user {
+    color: var(--color-highlight);
+}
+

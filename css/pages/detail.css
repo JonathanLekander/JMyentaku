@@ -86,3 +86,38 @@
     height: 315px;
     border-radius: 8px;
 }
+
+/* icon  */
+.stats i {
+    width: 20px;
+    margin-right: 8px;
+    color: var(--color-highlight);
+}
+
+.stats .fa-star {
+    color: var(--color-star);
+}
+
+.stats .fa-heart {
+    color: var(--color-heart);
+}
+
+.detail h1 i {
+    color: var(--color-highlight);
+    margin-right: 12px;
+}
+
+.detail p i {
+    margin-right: 8px;
+    color: var(--color-highlight);
+}
+
+.trailer-container h3 i {
+    margin-right: 8px;
+    color: var(--color-highlight);
+}
+
+.detail-genres h3 i {
+    margin-right: 8px;
+    color: var(--color-highlight);
+}
