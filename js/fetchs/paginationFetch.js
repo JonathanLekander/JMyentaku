@@ -100,22 +100,31 @@ function displayItems(items, type) {
 
         const isFav = favorites.includes(item.mal_id.toString());
 
+       
+        let statsHtml = '';
+        if (item.score) statsHtml += `<i class="fas fa-star"></i> ${item.score} `;
+        
+        if (type === 'anime') {
+            if (item.episodes) statsHtml += `<i class="fas fa-play-circle"></i> ${item.episodes} eps `;
+            if (item.favorites) statsHtml += `<i class="fas fa-heart"></i> ${item.favorites} faves`;
+        } else if (type === 'manga') {
+            if (item.volumes) statsHtml += `<i class="fas fa-book"></i> ${item.volumes} vols `;
+            if (item.chapters) statsHtml += `<i class="fas fa-book-open"></i> ${item.chapters} ch`;
+        }
+
         card.innerHTML = `
             <img src="${imageUrl}" alt="${title}" loading="lazy">
-
             <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${item.mal_id}" data-type="${type}">
-              ★
+                ${isFav ? '★' : '☆'}
             </button>
-
             <div class="item-info">
                 <div class="item-title">${title}</div>
-                ${item.score ? `<div class="item-stats"> ✰ ${item.score}</div>` : ''}
+                <div class="item-stats">${statsHtml}</div>
             </div>
         `;
 
         card.addEventListener('click', (e) => {
             if (e.target.classList.contains('fav-btn')) return;
-
             window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
         });
 
