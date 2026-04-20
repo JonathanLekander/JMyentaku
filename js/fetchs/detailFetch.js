@@ -1,3 +1,5 @@
+import { addToHistory } from '../storage/historyStorage.js';
+
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 const type = urlParams.get('type');
@@ -6,7 +8,26 @@ async function loadDetail() {
     try {
         const response = await fetch(`https://api.jikan.moe/v4/${type}/${id}`);
         const data = await response.json();
-        displayDetail(data.data);
+        const item = data.data;
+        
+        if (type === 'anime' || type === 'manga' || type === 'people') {
+            const title = type === 'people' ? item.name : item.title;
+            const imageUrl = item.images?.jpg?.image_url;
+            
+            addToHistory(
+                type,                        
+                item.mal_id,                 
+                title,                       
+                imageUrl,                    
+                {
+                    score: item.score,
+                    episodes: item.episodes,
+                    status: item.status
+                }
+            );
+        }
+        
+        displayDetail(item);
     } catch (error) {
         document.getElementById('detail-content').innerHTML = '<p>Error loading details</p>';
         console.error(error);
