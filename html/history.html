@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/Logo/favicon.ico">
+    <title>JMyentaku - History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/pages/history.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="index.html">
+                <img src="../Images/Logo/JMYentaku7.png" alt="JMyentaku logo">
+            </a>
+        </div>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> <span>Home</span></a>
+            <a href="anime.html"><i class="fas fa-film"></i> <span>Animes</span></a>
+            <a href="manga.html"><i class="fas fa-book-open"></i> <span>Mangas</span></a>
+            <a href="myFaves.html"><i class="fas fa-star"></i> <span>My Faves</span></a>
+            <a href="history.html"><i class="fas fa-history"></i> <span>History</span></a>
+            <a href="contact.html"><i class="fas fa-envelope"></i> <span>Contact</span></a>
+        </nav>
+    </header>
+
+    <main class="history-main">
+        <div class="history-header">
+            <h1><i class="fas fa-history"></i> Viewing History</h1>
+            <button id="clear-history-btn" class="clear-history-btn">
+                <i class="fas fa-trash"></i> Clear History
+            </button>
+        </div>
+        
+        <div id="history-list" class="anime-grid"></div>
+    </main>
+
+    <footer>
+        <p><i class="far fa-copyright"></i> Copyright &copy; 2026 JMyentaku</p>
+    </footer>
+
+    <dialog id="confirm-dialog" class="confirm-dialog">
+        <div class="confirm-dialog-content">
+            <i class="fas fa-trash-alt"></i>
+            <h3>Clear History</h3>
+            <p>Are you sure you want to delete all your history?</p>
+            <p class="warning">This action cannot be undone.</p>
+            <div class="confirm-dialog-buttons">
+                <button id="dialog-cancel" class="dialog-btn cancel-btn">Cancel</button>
+                <button id="dialog-confirm" class="dialog-btn confirm-btn">Clear All</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script type="module" src="../js/events/historyPage.js"></script>
+    <script src="../js/events/navActive.js"></script>
+</body>
+</html>
