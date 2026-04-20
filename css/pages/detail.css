@@ -1,27 +1,33 @@
-.detail-layout {
-    display: flex;
-    gap: 2rem;
-    align-items: flex-start;
+#detail-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 20px;
+}
+
+.detail-layout {
+    display: flex;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .aside-detail {
-    position: sticky;
-    top: 1rem;
-    width: 280px;
+    width: 300px;
     flex-shrink: 0;
-    background-color: var(--color-card);
-    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    background: var(--color-card);
     border: 1px solid var(--color-border);
-    overflow: hidden;
+    border-radius: 12px;
+    padding: 15px;
 }
 
 .aside-detail img {
     width: 100%;
-    height: auto;
-    display: block;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .stats {
@@ -32,9 +38,13 @@
 }
 
 .stats p {
-    display: block;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     justify-content: space-between;
     margin: 0;
+    margin-bottom: 8px;
     padding: 0.25rem 0;
     border-bottom: 1px solid var(--color-border);
     font-size: 0.9rem;
@@ -54,6 +64,25 @@
     min-width: 0;
 }
 
+.detail-container {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.detail-container {
+    background: var(--color-card);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+}
+
+.detail-image img {
+    width: 300px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 .detail h1 {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
@@ -69,7 +98,7 @@
 .detail p {
     line-height: 1.6;
     color: var(--color-text-muted);
-    margin-bottom: 1rem;
+    margin-bottom: 15px;
 }
 
 .trailer-container {
@@ -120,4 +149,60 @@
 .detail-genres h3 i {
     margin-right: 8px;
     color: var(--color-highlight);
+}
+
+.detail-info {
+    flex: 1;
+}
+
+.detail-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.detail-description {
+    line-height: 1.6;
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+
+    .detail-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .aside-detail,
+    .detail {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    /* 🔥 ACÁ ESTÁ LA MAGIA */
+    .aside-detail {
+        order: 1;
+    }
+
+    .detail {
+        order: 2;
+    }
+
+    .stats {
+        order: 4;
+    }
+
+    .trailer-container {
+        order: 3;
+    }
+
+    /* permitir reordenar */
+    .aside-detail,
+    .detail {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .trailer-container iframe {
+        height: 220px;
+    }
 }
