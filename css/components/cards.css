@@ -13,7 +13,10 @@
     scroll-behavior: smooth;
     flex: 1;
     cursor: grab;
-    scrollbar-width: none; 
+    scrollbar-width: none;
+    
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
 }
 
 #top-animes::-webkit-scrollbar,
@@ -49,16 +52,18 @@
     border-radius: 8px;
     padding: var(--spacing-medium);
     border: 1px solid var(--color-border);
-    min-width: 280px;
+
+    min-width: 220px;
     max-width: 280px;
-    flex-shrink: 0;
+    flex: 1 1 220px;
+
     user-select: none;
     position: relative;
 }
 
 .item img {
     width: 100%;
-    height: 180px;
+    height: 160px;
     object-fit: cover;
     border-radius: 4px;
     pointer-events: none;
@@ -112,4 +117,10 @@
 /* Cuando está en favoritos */
 .fav-btn.active {
     color: var(--color-star);
+}
+
+@media (max-width: 600px) {
+    .move-btn {
+        display: none;
+    }
 }
