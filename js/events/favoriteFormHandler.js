@@ -1,4 +1,5 @@
 import { addFavorite } from "../storage/favoriteStorage.js";
+import { showToast } from "../UI/notifications.js";
 
 let pendingItem = null;
 
@@ -73,7 +74,7 @@ function attachModalEvents() {
             createdAt: new Date().toISOString()
         });
 
-        alert("Added successfully!");
+        showToast("Added successfully!");
 
         closeModal();
     });
