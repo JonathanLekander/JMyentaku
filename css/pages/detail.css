@@ -39,25 +39,32 @@
 }
 
 .stats p {
-    font-size: 14px;
     display: flex;
-    align-items: center;
-    gap: 6px;
     justify-content: space-between;
+    align-items: center;
+    gap: 12px;
     margin: 0;
     margin-bottom: 8px;
     padding: 0.25rem 0;
     border-bottom: 1px solid var(--color-border);
-    font-size: 0.9rem;
+    font-size:0.9rem;
+}
+
+.stats p i {
+    width: 20px;
+    flex-shrink: 0;
 }
 
 .stats p strong {
     color: var(--color-text);
+    font-weight: 600;
+    flex-shrink: 0;
 }
 
-.stats p span,
-.stats p:not(strong) {
+.stat-value {
+    text-align: right;
     color: var(--color-text-muted);
+    flex: 1;
 }
 
 .detail {
@@ -169,7 +176,7 @@
 .back-btn {
     position: absolute;
     top: 20px;
-    right: 20px; /* 👈 clave: ahora va a la derecha */
+    right: 20px; 
 
     width: 40px;
     height: 40px;
@@ -178,7 +185,7 @@
     border: none;
 
     background: rgba(0, 0, 0, 0.6);
-    color: white;
+    color: var(--color-white);
 
     font-size: 18px;
     cursor: pointer;
@@ -188,7 +195,7 @@
     justify-content: center;
 
     transition: all 0.2s ease;
-    z-index: 10; /* 👈 evita que quede atrás */
+    z-index: 10; 
 }
 
 .back-btn:hover {

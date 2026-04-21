@@ -49,11 +49,14 @@ function displayDetail(item) {
             <img src="${image}" alt="${title}">
 
             <div class="stats">
-                ${item.score ? `<p><i class="fas fa-star"></i> Score: ${item.score}</p>` : ''}
-                ${item.favorites ? `<p><i class="fas fa-heart"></i> Favorites: ${item.favorites}</p>` : ''}
-                ${item.episodes ? `<p><i class="fas fa-play-circle"></i> Episodes: ${item.episodes}</p>` : ''}
-                ${item.duration ? `<p><i class="fas fa-clock"></i> Duration: ${item.duration}</p>` : ''}
-                ${item.rank ? `<p><i class="fas fa-trophy"></i> Rank: #${item.rank}</p>` : ''}
+                ${item.score ? `<p><i class="fas fa-star"></i> <strong>Score:</strong> <span class="stat-value">${item.score}</span></p>` : ''}
+                ${item.popularity ? `<p><i class="fas fa-chart-line"></i> <strong>Popularity:</strong> <span class="stat-value">#${item.popularity}</span></p>` : ''}
+                ${item.favorites ? `<p><i class="fas fa-heart"></i> <strong>Favorites:</strong> <span class="stat-value">${item.favorites.toLocaleString()}</span></p>` : ''}
+                ${item.episodes ? `<p><i class="fas fa-play-circle"></i> <strong>Episodes:</strong> <span class="stat-value">${item.episodes}</span></p>` : ''}
+                ${item.duration ? `<p><i class="fas fa-clock"></i> <strong>Duration:</strong> <span class="stat-value">${item.duration}</span></p>` : ''}
+                ${item.rank ? `<p><i class="fas fa-trophy"></i> <strong>Rank:</strong> <span class="stat-value">#${item.rank}</span></p>` : ''}
+                ${item.status ? `<p><i class="fas fa-info-circle"></i> <strong>Status:</strong> <span class="stat-value">${item.status}</span></p>` : ''}
+                ${item.year ? `<p><i class="fas fa-calendar"></i> <strong>Year:</strong> <span class="stat-value">${item.year}</span></p>` : ''}
             </div>
         </div>
 
