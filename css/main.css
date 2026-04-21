@@ -32,6 +32,6 @@ main {
 
 @media (max-width: 600px) {
     main {
-        padding: 10px;
+        padding-top: 50px;
     }
 }
