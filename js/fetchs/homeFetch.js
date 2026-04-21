@@ -2,8 +2,7 @@ import { showSpinner } from "../UI/spinner.js";
 
 async function fetchData(url, containerId, mapItem, delay = 0) {
     const container = document.getElementById(containerId);
-
-    // ✅ PRIMERO mostramos spinner
+    
     showSpinner(container);
 
     if (delay > 0) {
@@ -11,7 +10,7 @@ async function fetchData(url, containerId, mapItem, delay = 0) {
     }
 
     try {
-        // 👇 opcional: pequeño delay para que se note
+        
         await new Promise(resolve => setTimeout(resolve, 300));
 
         const response = await fetch(url);
@@ -24,7 +23,6 @@ async function fetchData(url, containerId, mapItem, delay = 0) {
 
         const data = await response.json();
 
-        // ✅ recién acá reemplazamos el spinner
         container.innerHTML = '';
 
         data.data.forEach(item => {
