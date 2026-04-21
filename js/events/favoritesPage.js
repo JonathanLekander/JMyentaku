@@ -1,4 +1,4 @@
-import { getAllFavorites, removeFavorite } from '../storage/favoriteStorage.js';
+import { getFavorites, removeFavorite } from '../storage/favoriteStorage.js';
 
 let allFavoritesItems = [];
 let currentSearchTerm = '';
@@ -29,7 +29,7 @@ async function loadFavorites() {
     const container = document.getElementById("favorites-list");
     if (!container) return;
 
-    const favorites = getAllFavorites();  
+    const favorites = getFavorites();  
 
     if (favorites.length === 0) {
         container.innerHTML = `
@@ -58,12 +58,17 @@ async function loadFavorites() {
 
                 if (!data.data) continue;
 
-                results.push({ ...data.data, itemType: fav.type });
+                results.push({
+                    ...data.data,
+                    itemType: fav.type,                    
+                    user: fav.user || null,
+                    createdAt: fav.createdAt || null
+                });
 
                 await new Promise(r => setTimeout(r, 300));
 
             } catch (err) {
-                console.log("Error con ID:", fav.id);
+            console.log("Error con ID:", fav.id);
             }
         }
 

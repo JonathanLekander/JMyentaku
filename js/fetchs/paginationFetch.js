@@ -1,5 +1,6 @@
-import { getFavorites, toggleFavorite, isFavorite } from '../storage/favoriteStorage.js';
+import { getFavorites, isFavorite } from '../storage/favoriteStorage.js';
 import { buildUrl } from './filterFetch.js';
+import { openFavoriteModal } from "../events/favoriteFormHandler.js";
 
 let currentPage = 1;
 let currentType = 'anime';
@@ -114,7 +115,13 @@ function displayItems(items, type) {
 
         card.innerHTML = `
             <img src="${imageUrl}" alt="${title}" loading="lazy">
-            <button class="fav-btn ${isFav ? 'active' : ''}" data-id="${item.mal_id}" data-type="${type}">
+            <button 
+                class="fav-btn ${isFav ? 'active' : ''}" 
+                data-id="${item.mal_id}" 
+                data-type="${type}"
+                data-title="${title}"
+                data-image="${imageUrl}"
+            >
                 ${isFav ? '★' : '☆'}
             </button>
             <div class="item-info">
@@ -136,20 +143,14 @@ function displayItems(items, type) {
 document.addEventListener("click", (e) => {
     const btn = e.target.closest(".fav-btn");
 
-    if (btn) {
-        e.stopPropagation();
+    if (!btn) return;
 
-        const id = btn.dataset.id;
-        const type = btn.dataset.type;  
-        
-        if (!type) return;  
-        
-        const isNowFavorite = toggleFavorite(type, id);
-        
-        if (isNowFavorite) {
-            btn.classList.add("active");
-        } else {
-            btn.classList.remove("active");
-        }
-    }
+    console.log("CLICK EN FAVORITO"); // 👈 DEBUG
+
+    openFavoriteModal({
+        id: btn.dataset.id,
+        type: btn.dataset.type,
+        title: btn.dataset.title,
+        image: btn.dataset.image
+    });
 });
