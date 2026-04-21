@@ -36,9 +36,14 @@ function displayDetail(item) {
 
     const trailerUrl = item.trailer?.embed_url || null;
 
-    container.innerHTML = `
+    container.innerHTML = `    
+
     <div class="detail-layout">
 
+        <button class="back-btn" id="back-btn">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        
         <!-- IMAGEN + STATS -->
         <div class="aside-detail">
             <img src="${image}" alt="${title}">
@@ -72,4 +77,13 @@ function displayDetail(item) {
     `;
 }
 
+function setupDetailEvents() {
+    document.addEventListener("click", (e) => {
+        if (e.target.id === "back-btn") {
+            window.history.back();
+        }
+    });
+}
+
 loadDetail();
+setupDetailEvents();
