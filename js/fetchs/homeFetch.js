@@ -1,32 +1,41 @@
+import { showSpinner } from "../UI/spinner.js";
+
 async function fetchData(url, containerId, mapItem, delay = 0) {
+    const container = document.getElementById(containerId);
+
+    // ✅ PRIMERO mostramos spinner
+    showSpinner(container);
+
     if (delay > 0) {
         await new Promise(resolve => setTimeout(resolve, delay));
     }
-    
+
     try {
+        // 👇 opcional: pequeño delay para que se note
+        await new Promise(resolve => setTimeout(resolve, 300));
+
         const response = await fetch(url);
-        
+
         if (response.status === 429) {
             console.log('Rate limit, retrying...');
             await new Promise(resolve => setTimeout(resolve, 500));
             return fetchData(url, containerId, mapItem, 0);
         }
-        
+
         const data = await response.json();
-        const container = document.getElementById(containerId);
+
+        // ✅ recién acá reemplazamos el spinner
         container.innerHTML = '';
+
         data.data.forEach(item => {
             container.innerHTML += mapItem(item);
         });
+
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById(containerId).innerHTML = '<p>Error loading data</p>';
+        container.innerHTML = '<p>Error loading data</p>';
     }
 }
-
-document.getElementById('top-animes').innerHTML = '<p>Loading...</p>';
-document.getElementById('top-mangas').innerHTML = '<p>Loading...</p>';
-document.getElementById('top-actors').innerHTML = '<p>Loading...</p>';
 
 // TOP Animes
 fetchData('https://api.jikan.moe/v4/top/anime?limit=10', 'top-animes', anime => `

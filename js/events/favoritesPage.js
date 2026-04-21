@@ -1,4 +1,5 @@
 import { getFavorites, removeFavorite } from '../storage/favoriteStorage.js';
+import { showSpinner } from "../UI/spinner.js";
 
 let allFavoritesItems = [];
 let currentSearchTerm = '';
@@ -40,7 +41,7 @@ async function loadFavorites() {
         return;
     }
 
-    container.innerHTML = "<div>Loading...</div>";
+   showSpinner(container);
 
     try {
         const results = [];

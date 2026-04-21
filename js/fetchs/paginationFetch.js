@@ -1,6 +1,7 @@
 import { getFavorites, isFavorite } from '../storage/favoriteStorage.js';
 import { buildUrl } from './filterFetch.js';
 import { openFavoriteModal } from "../events/favoriteFormHandler.js";
+import { showSpinner } from "../UI/spinner.js";
 
 let currentPage = 1;
 let currentType = 'anime';
@@ -15,7 +16,8 @@ export async  function loadWithPagination(page = 1, type = 'anime', genreId = nu
     currentGenre = genreId;
 
     try {
-        container.innerHTML = '<div class="loading-spinner"> Loading...</div>';
+        
+        showSpinner(container);
 
         let url;
 
