@@ -2,6 +2,7 @@ import { addFavorite } from "../storage/favoriteStorage.js";
 import { showToast } from "../UI/notifications.js";
 
 let pendingItem = null;
+let pendingButton = null;
 
 function createModalIfNotExists() {
     if (document.getElementById("fav-modal")) return;
@@ -75,23 +76,34 @@ function attachModalEvents() {
 
         showToast("Added successfully!");
 
+        if (pendingButton) {
+          
+            pendingButton.classList.add('active');
+         
+            const icon = pendingButton.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-bookmark'; 
+            }
+        }
+
         closeModal();
     });
 }
 
-export function openFavoriteModal(item) {
 
-    console.log("OPEN MODAL", item); // DEBUG
+export function openFavoriteModal(item, buttonElement = null) {
+    console.log("OPEN MODAL", item);
 
     createModalIfNotExists();
 
     const modal = document.getElementById("fav-modal");
 
-    console.log("MODAL EN DOM:", modal); // 👈 DEBUG
+    console.log("MODAL EN DOM:", modal);
 
     if (!modal) return;
 
     pendingItem = item;
+    pendingButton = buttonElement; 
 
     modal.classList.remove("hidden");
 }
@@ -108,6 +120,7 @@ function closeModal() {
     document.getElementById("message").value = "";
 
     pendingItem = null;
+    pendingButton = null;
 }
 
 function isValidEmail(email) {

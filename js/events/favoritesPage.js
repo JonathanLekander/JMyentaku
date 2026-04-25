@@ -139,7 +139,7 @@ function filterAndDisplayFavorites() {
             <img src="${item.images.jpg.image_url}" alt="${title}">
             
             <button class="fav-btn active" data-id="${item.mal_id}" data-type="${item.itemType}">
-                ★
+                <i class="fas fa-bookmark"></i>
             </button>
             
             <div class="item-info">
