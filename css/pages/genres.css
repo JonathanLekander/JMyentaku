@@ -30,12 +30,12 @@
 
 .genre-btn:hover {
     background-color: rgba(0, 150, 255, 0.2);
-    color: white;
+    color:  var(--color-white);
 }
 
 .genre-btn.active {
     background-color: rgba(0, 150, 255, 0.35);
-    color: white;
+    color:  var(--color-white);
     box-shadow: 0 0 8px rgba(0, 150, 255, 0.4);
 }
 
@@ -52,7 +52,7 @@
 
 .genre-arrow:hover {
     background: rgba(0,150,255,0.2);
-    color: white;
+    color: var(--color-white);
 }
 
 

@@ -47,7 +47,7 @@
     justify-content: center;
     font-size: 28px;
     font-weight: bold;
-    color: white;
+    color:  var(--color-white);
 }
 
 .dev h3 {

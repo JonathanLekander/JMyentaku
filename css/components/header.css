@@ -71,7 +71,7 @@ nav a i {
 
 @media (max-width: 768px) {
 
-    /* HEADER SOLO LOGO */
+
     header {
         position: fixed;
         top: 0;
@@ -85,7 +85,6 @@ nav a i {
         z-index: 1000;
     }
 
-    /* NAV ABAJO */
     nav {
         position: fixed;
         bottom: 0;
@@ -103,7 +102,6 @@ nav a i {
         z-index: 1000;
     }
 
-    /* SOLO ICONOS */
     nav a {
         display: flex;
         flex-direction: column;
@@ -114,7 +112,7 @@ nav a i {
     }
 
     nav a span {
-        display: none; /* 👈 CLAVE */
+        display: none; 
     }
 
     nav a i {
@@ -147,7 +145,7 @@ nav a i {
     }
 
     nav a span {
-        display: inline; /* 👈 aparece texto */
+        display: inline;
         margin-left: 5px;
     }
 

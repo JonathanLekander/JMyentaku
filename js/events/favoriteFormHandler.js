@@ -3,7 +3,6 @@ import { showToast } from "../UI/notifications.js";
 
 let pendingItem = null;
 
-// 🧱 CREAR MODAL DINÁMICAMENTE
 function createModalIfNotExists() {
     if (document.getElementById("fav-modal")) return;
 
