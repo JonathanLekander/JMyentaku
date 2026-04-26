@@ -1,69 +1,69 @@
-const CACHE_NAME = 'jmyentaku-v3';
+const CACHE_NAME = 'jmyentaku-v4';
 
 const RECURSOS_SHELL = [
-    '/',
+    '/JMyentaku/',
     // HTML files
-    '/html/index.html',
-    '/html/anime.html',
-    '/html/manga.html',
-    '/html/myFaves.html',
-    '/html/history.html',
-    '/html/contact.html',
-    '/html/detail.html',
+    '/JMyentaku/index.html',
+    '/JMyentaku/html/anime.html',
+    '/JMyentaku/html/manga.html',
+    '/JMyentaku/html/myFaves.html',
+    '/JMyentaku/html/history.html',
+    '/JMyentaku/html/contact.html',
+    '/JMyentaku/html/detail.html',
     
     // CSS files
-    '/css/main.css',
-    '/css/base/var.css',
-    '/css/components/header.css',
-    '/css/components/cards.css',
-    '/css/components/footer.css',
-    '/css/components/filters.css',
-    '/css/components/pagination.css',
-    '/css/components/modal.css',
-    '/css/components/notifications.css',
-    '/css/components/spinner.css',
-    '/css/pages/home.css',
-    '/css/pages/detail.css',
-    '/css/pages/genres.css',
-    '/css/pages/contact.css',
-    '/css/pages/history.css',
-    '/css/pages/faves.css',       
+    '/JMyentaku/css/main.css',
+    '/JMyentaku/css/base/var.css',
+    '/JMyentaku/css/components/header.css',
+    '/JMyentaku/css/components/cards.css',
+    '/JMyentaku/css/components/footer.css',
+    '/JMyentaku/css/components/filters.css',
+    '/JMyentaku/css/components/pagination.css',
+    '/JMyentaku/css/components/modal.css',
+    '/JMyentaku/css/components/notifications.css',
+    '/JMyentaku/css/components/spinner.css',
+    '/JMyentaku/css/pages/home.css',
+    '/JMyentaku/css/pages/detail.css',
+    '/JMyentaku/css/pages/genres.css',
+    '/JMyentaku/css/pages/contact.css',
+    '/JMyentaku/css/pages/history.css',
+    '/JMyentaku/css/pages/faves.css',       
     
     // JS - Events
-    '/js/events/navActive.js',
-    '/js/events/moveBtn.js',
-    '/js/events/favoriteFormHandler.js',
-    '/js/events/favoritesPage.js',
-    '/js/events/historyPage.js',
+    '/JMyentaku/js/events/navActive.js',
+    '/JMyentaku/js/events/moveBtn.js',
+    '/JMyentaku/js/events/favoriteFormHandler.js',
+    '/JMyentaku/js/events/favoritesPage.js',
+    '/JMyentaku/js/events/historyPage.js',
     
     // JS - Fetchs
-    '/js/fetchs/paginationFetch.js',
-    '/js/fetchs/filterFetch.js',
-    '/js/fetchs/homeFetch.js',
-    '/js/fetchs/detailFetch.js',
+    '/JMyentaku/js/fetchs/paginationFetch.js',
+    '/JMyentaku/js/fetchs/filterFetch.js',
+    '/JMyentaku/js/fetchs/homeFetch.js',
+    '/JMyentaku/js/fetchs/detailFetch.js',
     
     // JS - Storage
-    '/js/storage/favoriteStorage.js',
-    '/js/storage/historyStorage.js',
+    '/JMyentaku/js/storage/favoriteStorage.js',
+    '/JMyentaku/js/storage/historyStorage.js',
     
     // JS - UI
-    '/js/UI/spinner.js',
-    '/js/UI/notifications.js',
+    '/JMyentaku/js/UI/spinner.js',
+    '/JMyentaku/js/UI/notifications.js',
     
     // JS - Utils
-    '/js/utils/fetchWithRetry.js',
+    '/JMyentaku/js/utils/fetchWithRetry.js',
     
     // PWA
-    '/js/pwa-init.js',              
-    '/manifest.json',
+    '/JMyentaku/js/pwa-init.js',              
+    '/JMyentaku/manifest.json',
     
     // Images
-    '/Images/Logo/JMYentaku7.png',
-    '/Images/Logo/favicon.ico',
-    '/Images/Logo/icon-96x96.png',   
-    '/Images/Logo/icon-192x192.png',
-    '/Images/Logo/icon-384x384.png',
-    '/Images/Logo/icon-512x512.png',
+    '/JMyentaku/Images/Logo/JMYentaku7.png',
+    '/JMyentaku/Images/Logo/favicon.ico',
+    '/JMyentaku/Images/Logo/icon-96x96.png',   
+    '/JMyentaku/Images/Logo/icon-192x192.png',
+    '/JMyentaku/Images/Logo/icon-384x384.png',
+    '/JMyentaku/Images/Logo/icon-512x512.png',
 ];
 
 // ── INSTALACIÓN ──────────────────────────────────────────────
@@ -161,7 +161,7 @@ self.addEventListener('fetch', event => {
           .catch(() => {
             // Sin conexión y sin caché: página de fallback
             if (event.request.destination === 'document') {
-              return caches.match('/index.html');
+              return caches.match('/JMyentaku/index.html');
             }
           });
       })
