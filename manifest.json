@@ -2,6 +2,7 @@
     "name": "JMyentaku - Anime & Manga Explorer",
     "short_name": "JMyentaku",
     "description": "Discover anime and manga with JMyentaku—find new titles, track favorites, connect with fans.",
+    "id": "/html/index.html",
     "start_url": "/html/index.html",
     "scope": "/",
     "display": "standalone",
@@ -10,25 +11,25 @@
     "theme_color": "#0a0e1a",
     "icons": [
         {
-            "src": "/Images/Logo/icon-96x96.png",
+            "src": "/Images/Logo/JMYentaku7.png",
             "sizes": "96x96",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/Images/Logo/icon-192x192.png",
+            "src": "/Images/Logo/JMYentaku7.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/Images/Logo/icon-384x384.png",
+            "src": "/Images/Logo/JMYentaku7.png",
             "sizes": "384x384",
             "type": "image/png",
             "purpose": "any"
         },
         {
-            "src": "/Images/Logo/icon-512x512.png",
+            "src": "/Images/Logo/JMYentaku7.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any"
