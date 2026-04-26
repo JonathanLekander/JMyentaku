@@ -8,7 +8,6 @@ let currentTypeFilter = 'all';
 document.addEventListener("DOMContentLoaded", () => {
     loadFavorites();
     
-    //local filters
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -35,13 +34,13 @@ async function loadFavorites() {
     if (favorites.length === 0) {
         container.innerHTML = `
             <div class="empty-message">
-                ⭐ There are not favorites yet! ⭐
+                ⭐ There are no favorites yet! ⭐
             </div>
         `;
         return;
     }
 
-   showSpinner(container);
+    showSpinner(container);
 
     try {
         const results = [];
@@ -51,7 +50,7 @@ async function loadFavorites() {
                 const res = await fetch(`https://api.jikan.moe/v4/${fav.type}/${fav.id}`);
 
                 if (!res.ok) {
-                    console.log("ID inválido:", fav.id);
+                    console.log("Invalid ID:", fav.id);
                     continue;
                 }
 
@@ -61,15 +60,15 @@ async function loadFavorites() {
 
                 results.push({
                     ...data.data,
-                    itemType: fav.type,                    
-                    user: fav.user || null,
+                    itemType: fav.type,
+                    preferences: fav.preferences || null, 
                     createdAt: fav.createdAt || null
                 });
 
                 await new Promise(r => setTimeout(r, 300));
 
             } catch (err) {
-            console.log("Error con ID:", fav.id);
+                console.log("Error with ID:", fav.id);
             }
         }
 
@@ -95,24 +94,31 @@ async function loadFavorites() {
     }
 }
 
-//local 
 function filterAndDisplayFavorites() {
     const container = document.getElementById("favorites-list");
     
     let filtered = [...allFavoritesItems];
     
-    
     if (currentTypeFilter !== 'all') {
         filtered = filtered.filter(item => item.itemType === currentTypeFilter);
     }
     
-   
     if (currentSearchTerm) {
         filtered = filtered.filter(item => {
             const title = (item.title || item.name || '').toLowerCase();
-            return title.includes(currentSearchTerm);
+            const category = (item.preferences?.category || '').toLowerCase();
+            const note = (item.preferences?.note || '').toLowerCase();
+            return title.includes(currentSearchTerm) || 
+                   category.includes(currentSearchTerm) || 
+                   note.includes(currentSearchTerm);
         });
     }
+    
+    filtered.sort((a, b) => {
+        const priorityA = a.preferences?.priority || 0;
+        const priorityB = b.preferences?.priority || 0;
+        return priorityB - priorityA;
+    });
     
     if (filtered.length === 0) {
         container.innerHTML = `
@@ -134,6 +140,13 @@ function filterAndDisplayFavorites() {
 
         const title = item.title || item.name;
         const typeLabel = item.itemType === 'anime' ? 'ANIME' : 'MANGA';
+        const prefs = item.preferences;
+        
+       //calculo de prioridad, lo vemos en la barra de progreso 
+        const priorityPercent = prefs ? (prefs.priority / 5) * 100 : 0;
+        
+        // Mostrar estrellas segim prioridad
+        const priorityStars = prefs ? "⭐".repeat(prefs.priority) : "";
 
         card.innerHTML = `
             <img src="${item.images.jpg.image_url}" alt="${title}">
@@ -145,11 +158,40 @@ function filterAndDisplayFavorites() {
             <div class="item-info">
                 <div class="item-title">${title}</div>
                 <div class="item-stats">
-                    ${item.score ? `✰ ${item.score}` : ''}
+                    ${item.score ? `<i class="fas fa-star"></i> ${item.score}` : ''}
                     <span style="margin-left: 8px; font-size: 10px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 10px;">
                         ${typeLabel}
                     </span>
                 </div>
+                
+                ${prefs ? `
+                <div class="preferences-info">
+                    <!-- Prioridad -->
+                    <div class="priority-row">
+                        <div class="priority-header">
+                            <span><i class="fas fa-chart-line"></i> Priority</span>
+                            <span class="priority-value-badge">${priorityStars} ${prefs.priority}/5</span>
+                        </div>
+                        <div class="priority-bar-container">
+                            <div class="priority-bar" style="width: ${priorityPercent}%;"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Categoría -->
+                    <div class="category-row">
+                        <i class="fas fa-tag"></i>
+                        <span class="category-tag">${escapeHtml(prefs.category)}</span>
+                    </div>
+                    
+                    <!-- Nota -->
+                    ${prefs.note ? `
+                    <div class="note-row">
+                        <i class="fas fa-quote-left"></i>
+                        <span class="note-text">"${escapeHtml(prefs.note.substring(0, 100))}${prefs.note.length > 100 ? '...' : ''}"</span>
+                    </div>
+                    ` : ''}
+                </div>
+                ` : ''}
             </div>
         `;
 
@@ -176,12 +218,10 @@ document.addEventListener("click", (e) => {
         if (type && id) {
             removeFavorite(type, id);
             
-           
             allFavoritesItems = allFavoritesItems.filter(item => 
                 !(item.mal_id.toString() === id && item.itemType === type)
             );
             
-           
             filterAndDisplayFavorites();
         }
     }
