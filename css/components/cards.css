@@ -116,7 +116,7 @@
 
 /* Cuando está en favoritos */
 .fav-btn.active {
-    color: var(--color-star);
+    color: var(--color-bookmark);
 }
 
 @media (max-width: 600px) {

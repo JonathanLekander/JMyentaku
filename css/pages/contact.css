@@ -47,7 +47,7 @@
     justify-content: center;
     font-size: 28px;
     font-weight: bold;
-    color:  var(--color-white);
+    color: var(--color-white);
 }
 
 .dev h3 {
@@ -63,38 +63,31 @@
     display: flex;
     justify-content: center;
     gap: 20px;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .line {
     display: flex;
     gap: 12px;
     align-items: flex-start;
-
-    width: 250px; 
+    width: 250px;
     padding: 20px;
-
     border-radius: 12px;
     border: 1px solid var(--color-border);
-
     background: rgba(255,255,255,0.02);
-
     transition: 0.3s ease;
 }
-
 
 .line:hover {
     transform: translateY(-5px);
     background: rgba(255,255,255,0.05);
 }
 
-
 .line i {
     font-size: 18px;
     color: var(--color-highlight);
     margin-top: 3px;
 }
-
 
 .line strong {
     display: block;
@@ -106,7 +99,6 @@
     font-size: 14px;
 }
 
-
 .line a {
     color: var(--color-text);
     text-decoration: none;
@@ -114,4 +106,110 @@
 
 .line a:hover {
     color: var(--color-highlight);
+}
+
+.map-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.map-section h2 {
+    color: var(--color-text);
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid var(--color-highlight);
+    padding-bottom: 6px;
+}
+
+.map-section h2 i {
+    color: var(--color-highlight);
+}
+
+.map-container {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--color-border);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.map-iframe {
+    width: 100%;
+    height: 250px;
+    border: 0;
+    display: block;
+}
+
+.map-address {
+    margin-top: 10px;
+    color: var(--color-text-muted);
+    font-size: 13px;
+}
+
+.map-address i {
+    color: var(--color-highlight);
+    margin-right: 6px;
+}
+
+@media (max-width: 768px) {
+    .contact-alt {
+        padding: 40px 15px;
+        gap: 30px;
+    }
+    
+    .contact-header h1 {
+        font-size: 24px;
+    }
+    
+    .dev-section {
+        gap: 30px;
+    }
+    
+    .avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 22px;
+    }
+    
+    .line {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .map-container {
+        border-radius: 8px;
+        max-width: 100%;
+    }
+    
+    .map-iframe {
+        height: 200px;
+    }
+    
+    .map-section h2 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-alt {
+        padding: 30px 12px;
+        gap: 25px;
+    }
+    
+    .info-lines {
+        gap: 12px;
+    }
+    
+    .line {
+        padding: 15px;
+        width: 100%;
+    }
+    
+    .map-iframe {
+        height: 180px;
+    }
 }

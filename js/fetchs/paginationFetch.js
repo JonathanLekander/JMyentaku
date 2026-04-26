@@ -1,13 +1,15 @@
-import { getFavorites, isFavorite } from '../storage/favoriteStorage.js';
+import { getFavorites } from '../storage/favoriteStorage.js';
 import { buildUrl } from './filterFetch.js';
 import { openFavoriteModal } from "../events/favoriteFormHandler.js";
 import { showSpinner } from "../UI/spinner.js";
+import { fetchWithRetry } from "../utils/fetchWithRetry.js";
+import { showToast } from "../UI/notifications.js";
 
 let currentPage = 1;
 let currentType = 'anime';
 let currentGenre = null;
 
-export async  function loadWithPagination(page = 1, type = 'anime', genreId = null) {
+export async function loadWithPagination(page = 1, type = 'anime', genreId = null) {
     const container = document.getElementById('anime-list');
     if (!container) return;
 
@@ -16,32 +18,35 @@ export async  function loadWithPagination(page = 1, type = 'anime', genreId = nu
     currentGenre = genreId;
 
     try {
-        
         showSpinner(container);
 
         let url;
-
         if (typeof buildUrl === 'function') {
             url = buildUrl(page, type);
         } else {
             url = `https://api.jikan.moe/v4/${type}?page=${page}`;
         }
 
-        const response = await fetch(url);
+        const data = await fetchWithRetry(url, {}, 3, 1000);
         
-        if (response.status === 429) {
-            container.innerHTML = '<div class="error-message"> Too many requests. Please wait 2 seconds...</div>';
-            setTimeout(() => loadWithPagination(page, type, genreId), 2000);
+        if (!data.data || data.data.length === 0) {
+            container.innerHTML = '<div class="empty-message">No items found</div>';
+            renderPaginationFromAPI({ current_page: 1, has_next_page: false });
             return;
         }
-
-        const data = await response.json();
+        
         displayItems(data.data, type);
         renderPaginationFromAPI(data.pagination);
 
     } catch (error) {
         console.error('Error:', error);
-        container.innerHTML = '<div class="error-message"> Error loading data...</div>';
+        container.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> 
+                Error loading data. Please try again later.
+            </div>
+        `;
+        showToast("Failed to load data. Please refresh the page.", "error");
     }
 }
 
@@ -61,12 +66,10 @@ function renderPaginationFromAPI(pagination) {
         container.appendChild(prevBtn);
     }
 
-    // pag actual
     const pageInfo = document.createElement('span');
     pageInfo.textContent = `page ${pagination.current_page}`;
     pageInfo.classList.add('page-info');
     container.appendChild(pageInfo);
-
 
     if (pagination.has_next_page) {
         const nextBtn = document.createElement('button');
@@ -90,7 +93,7 @@ function displayItems(items, type) {
 
     container.innerHTML = '';
 
-    const favorites = getFavorites(type);
+    const favorites = getFavorites();
 
     items.forEach(item => {
         const card = document.createElement('div');
@@ -101,9 +104,8 @@ function displayItems(items, type) {
         const title = item.title || item.name || 'N/A';
         const imageUrl = item.images?.jpg?.image_url || '../Images/placeholder.jpg';
 
-        const isFav = favorites.includes(item.mal_id.toString());
+        const isFav = favorites.some(fav => fav.id === item.mal_id.toString() && fav.type === type);
 
-       
         let statsHtml = '';
         if (item.score) statsHtml += `<i class="fas fa-star"></i> ${item.score} `;
         
@@ -124,7 +126,7 @@ function displayItems(items, type) {
                 data-title="${title}"
                 data-image="${imageUrl}"
             >
-                ${isFav ? '★' : '☆'}
+                <i class="${isFav ? 'fas fa-bookmark' : 'far fa-bookmark'}"></i>
             </button>
             <div class="item-info">
                 <div class="item-title">${title}</div>
@@ -133,7 +135,7 @@ function displayItems(items, type) {
         `;
 
         card.addEventListener('click', (e) => {
-            if (e.target.classList.contains('fav-btn')) return;
+            if (e.target.closest('.fav-btn')) return;
             window.location.href = `detail.html?id=${item.mal_id}&type=${type}`;
         });
 
@@ -141,18 +143,14 @@ function displayItems(items, type) {
     });
 }
 
-//click fav
 document.addEventListener("click", (e) => {
     const btn = e.target.closest(".fav-btn");
-
     if (!btn) return;
-
-    console.log("CLICK EN FAVORITO"); // 👈 DEBUG
 
     openFavoriteModal({
         id: btn.dataset.id,
         type: btn.dataset.type,
         title: btn.dataset.title,
         image: btn.dataset.image
-    });
+    }, btn);
 });
