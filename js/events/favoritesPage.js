@@ -180,14 +180,14 @@ function filterAndDisplayFavorites() {
                     <!-- Categoría -->
                     <div class="category-row">
                         <i class="fas fa-tag"></i>
-                        <span class="category-tag">${escapeHtml(prefs.category)}</span>
+                        <span class="category-tag">${(prefs.category)}</span>
                     </div>
                     
                     <!-- Nota -->
                     ${prefs.note ? `
                     <div class="note-row">
                         <i class="fas fa-quote-left"></i>
-                        <span class="note-text">"${escapeHtml(prefs.note.substring(0, 100))}${prefs.note.length > 100 ? '...' : ''}"</span>
+                        <span class="note-text">"${(prefs.note.substring(0, 100))}${prefs.note.length > 100 ? '...' : ''}"</span>
                     </div>
                     ` : ''}
                 </div>
