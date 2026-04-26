@@ -203,6 +203,45 @@
     transform: scale(1.1);
 }
 
+
+.detail-fav-btn {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(59, 91, 165, 0.15);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.detail-fav-btn i {
+    font-size: 16px;
+}
+
+.detail-fav-btn:hover {
+    background: rgba(59, 91, 165, 0.3);
+    border-color: var(--color-highlight);
+}
+
+.detail-fav-btn.active {
+    background: rgba(59, 91, 165, 0.3);
+    border-color: var(--color-highlight);
+    color: var(--color-highlight);
+}
+
+.detail-fav-btn.active i {
+    color: var(--color-highlight);
+}
+
+
+
 @media (max-width: 768px) {
 
     .detail-layout {

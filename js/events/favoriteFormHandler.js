@@ -188,6 +188,14 @@ function attachModalEvents() {
             createdAt: new Date().toISOString()
         });
 
+       
+        window.dispatchEvent(new CustomEvent('favoriteAdded', {
+            detail: {
+                id: pendingItem.id,
+                type: pendingItem.type
+            }
+        }));
+
         showToast(`"${pendingItem.title}" added! Priority: ${priority}/5`, "success");
 
         if (pendingButton) {

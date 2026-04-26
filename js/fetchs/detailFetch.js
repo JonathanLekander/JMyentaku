@@ -1,14 +1,19 @@
 import { addToHistory } from '../storage/historyStorage.js';
+import { getFavorites, isFavorite } from '../storage/favoriteStorage.js';
+import { openFavoriteModal } from "../events/favoriteFormHandler.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
 const type = urlParams.get('type');
+
+let currentItem = null;
 
 async function loadDetail() {
     try {
         const response = await fetch(`https://api.jikan.moe/v4/${type}/${id}`);
         const data = await response.json();
         const item = data.data;
+        currentItem = item;
         
         const title = type === 'people' ? item.name : item.title;
         const imageUrl = item.images?.jpg?.image_url;
@@ -35,6 +40,9 @@ function displayDetail(item) {
         : item.images.jpg.large_image_url;
 
     const trailerUrl = item.trailer?.embed_url || null;
+    
+    // Verificar 
+    const isFav = isFavorite(item.mal_id.toString(), type);
 
     container.innerHTML = `    
 
@@ -47,6 +55,16 @@ function displayDetail(item) {
         <!-- IMAGEN + STATS -->
         <div class="aside-detail">
             <img src="${image}" alt="${title}">
+
+            <!-- Botón de favoritos -->
+            <button class="detail-fav-btn ${isFav ? 'active' : ''}" 
+                    data-id="${item.mal_id}" 
+                    data-type="${type}"
+                    data-title="${title}"
+                    data-image="${image}">
+                <i class="${isFav ? 'fas fa-bookmark' : 'far fa-bookmark'}"></i>
+                <span>${isFav ? 'Saved to Favorites' : 'Save to Favorites'}</span>
+            </button>
 
             <div class="stats">
                 ${item.score ? `<p><i class="fas fa-star"></i> <strong>Score:</strong> <span class="stat-value">${item.score}</span></p>` : ''}
@@ -78,6 +96,21 @@ function displayDetail(item) {
 
     </div>
     `;
+    
+   
+    const favBtn = document.querySelector('.detail-fav-btn');
+    if (favBtn) {
+        favBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            
+            openFavoriteModal({
+                id: favBtn.dataset.id,
+                type: favBtn.dataset.type,
+                title: favBtn.dataset.title,
+                image: favBtn.dataset.image
+            }, favBtn);
+        });
+    }
 }
 
 function setupDetailEvents() {
@@ -87,6 +120,26 @@ function setupDetailEvents() {
         }
     });
 }
+
+window.addEventListener('favoriteAdded', (e) => {
+    const { id, type: favType } = e.detail;
+    
+    // verificar si el favorito agregado corresponde al item actual
+    if (id === currentItem?.mal_id?.toString() && favType === type) {
+        const favBtn = document.querySelector('.detail-fav-btn');
+        if (favBtn) {
+            favBtn.classList.add('active');
+            const icon = favBtn.querySelector('i');
+            if (icon) {
+                icon.className = 'fas fa-bookmark';
+            }
+            const span = favBtn.querySelector('span');
+            if (span) {
+                span.textContent = 'Saved to Favorites';
+            }
+        }
+    }
+});
 
 loadDetail();
 setupDetailEvents();
