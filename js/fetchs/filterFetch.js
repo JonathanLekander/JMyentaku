@@ -1,4 +1,6 @@
 import { loadWithPagination } from '../fetchs/paginationFetch.js';
+import { fetchWithRetry } from "../utils/fetchWithRetry.js";
+import { showToast } from "../UI/notifications.js";
 
 export function buildUrl(page = 1, type = 'anime') {
     const search = document.getElementById('search-input')?.value;
@@ -8,7 +10,7 @@ export function buildUrl(page = 1, type = 'anime') {
 
     let url = `https://api.jikan.moe/v4/${type}?page=${page}`;
 
-    if (search) url += `&q=${search}`;
+    if (search) url += `&q=${encodeURIComponent(search)}`;
     if (genre) url += `&genres=${genre}`;
 
     if (scoreSort) {
@@ -20,23 +22,14 @@ export function buildUrl(page = 1, type = 'anime') {
     return url;
 }
 
-
 async function loadGenres(type) {
     const select = document.getElementById('genre-select');
     if (!select) return;
 
     try {
-        const response = await fetch(`https://api.jikan.moe/v4/genres/${type}`);
+        const data = await fetchWithRetry(`https://api.jikan.moe/v4/genres/${type}`, {}, 3, 1000);
 
-        if (response.status === 429) {
-            console.log('Rate limit genres...');
-            setTimeout(() => loadGenres(type), 500);
-            return;
-        }
-
-        const data = await response.json();
-
-        if (!data.data) return; 
+        if (!data.data) return;
 
         select.innerHTML = '<option value="">All Genres</option>';
 
@@ -48,10 +41,11 @@ async function loadGenres(type) {
         });
 
     } catch (err) {
-        console.error('Error genres:', err);
+        console.error('Error loading genres:', err);
+        select.innerHTML = '<option value="">Error loading genres</option>';
+        showToast("Failed to load genres. Please refresh the page.", "error");
     }
 }
-
 
 function setupFilters(type) {
     const inputs = document.querySelectorAll('#search-input, #genre-select, #date-sort, #score-sort');
@@ -62,14 +56,12 @@ function setupFilters(type) {
         });
     });
 
-   
     document.getElementById('search-input')?.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             loadWithPagination(1, type);
         }
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     const path = window.location.pathname.toLowerCase();

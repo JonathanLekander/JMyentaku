@@ -1,44 +1,38 @@
 import { showSpinner } from "../UI/spinner.js";
+import { fetchWithRetry } from "../utils/fetchWithRetry.js";
+import { showToast } from "../UI/notifications.js";
 
-async function fetchData(url, containerId, mapItem, delay = 0) {
+async function fetchData(url, containerId, mapItem, errorMessage = "Error loading data") {
     const container = document.getElementById(containerId);
+    
+    if (!container) return;
     
     showSpinner(container);
 
-    if (delay > 0) {
-        await new Promise(resolve => setTimeout(resolve, delay));
-    }
-
     try {
-        
-        await new Promise(resolve => setTimeout(resolve, 300));
+        const data = await fetchWithRetry(url, {}, 3, 1000);
 
-        const response = await fetch(url);
-
-        if (response.status === 429) {
-            console.log('Rate limit, retrying...');
-            await new Promise(resolve => setTimeout(resolve, 500));
-            return fetchData(url, containerId, mapItem, 0);
+        if (!data.data || data.data.length === 0) {
+            container.innerHTML = '<p>No data available</p>';
+            return;
         }
 
-        const data = await response.json();
-
         container.innerHTML = '';
-
         data.data.forEach(item => {
             container.innerHTML += mapItem(item);
         });
 
     } catch (error) {
         console.error('Error:', error);
-        container.innerHTML = '<p>Error loading data</p>';
+        container.innerHTML = `<p class="error-message">${errorMessage}. Please try again later.</p>`;
+        showToast(errorMessage, "error");
     }
 }
 
-// TOP Animes
+//TOP ANIMES
 fetchData('https://api.jikan.moe/v4/top/anime?limit=10', 'top-animes', anime => `
     <div class="item" data-id="${anime.mal_id}" data-type="anime">
-        <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+        <img src="${anime.images.jpg.image_url}" alt="${anime.title}" loading="lazy">
         <div class="item-info">
             <div class="item-title">${anime.title}</div>
             <div class="item-stats">
@@ -49,12 +43,12 @@ fetchData('https://api.jikan.moe/v4/top/anime?limit=10', 'top-animes', anime => 
             <div class="item-desc">${anime.synopsis ? anime.synopsis.substring(0, 120) + '...' : 'No description'}</div>
         </div>
     </div>
-`);
+`, "Failed to load top animes");
 
-// TOP Mangas
+//TOP MANGAS
 fetchData('https://api.jikan.moe/v4/top/manga?limit=5', 'top-mangas', manga => `
     <div class="item" data-id="${manga.mal_id}" data-type="manga">
-        <img src="${manga.images.jpg.image_url}" alt="${manga.title}">
+        <img src="${manga.images.jpg.image_url}" alt="${manga.title}" loading="lazy">
         <div class="item-info">
             <div class="item-title">${manga.title}</div>
             <div class="item-stats">
@@ -65,12 +59,12 @@ fetchData('https://api.jikan.moe/v4/top/manga?limit=5', 'top-mangas', manga => `
             <div class="item-desc">${manga.synopsis ? manga.synopsis.substring(0, 120) + '...' : 'No description'}</div>
         </div>
     </div>
-`);
+`, "Failed to load top mangas");
 
-// TOP Actores
+//TOP ACTORS
 fetchData('https://api.jikan.moe/v4/top/people?limit=5', 'top-actors', actor => `
     <div class="item" data-id="${actor.mal_id}" data-type="people">
-        <img src="${actor.images.jpg.image_url}" alt="${actor.name}">
+        <img src="${actor.images.jpg.image_url}" alt="${actor.name}" loading="lazy">
         <div class="item-info">
             <div class="item-title">${actor.name}</div>
             <div class="item-stats">
@@ -80,6 +74,6 @@ fetchData('https://api.jikan.moe/v4/top/people?limit=5', 'top-actors', actor => 
             <div class="item-desc">${actor.about ? actor.about.substring(0, 120) + '...' : 'No biography'}</div>
         </div>
     </div>
-`);
+`, "Failed to load top voice actors");
 
 //nota "?" es if ":" es else "=>" es función flecha, lo podemos hacer de otra manera pero con esto el codigo queda mas corto y legible, el "||" es para mostrar "N/A" si no hay puntuación o episodios disponibles.

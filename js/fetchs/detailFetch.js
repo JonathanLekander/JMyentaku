@@ -1,6 +1,8 @@
 import { addToHistory } from '../storage/historyStorage.js';
-import { getFavorites, isFavorite } from '../storage/favoriteStorage.js';
+import { isFavorite } from '../storage/favoriteStorage.js';
 import { openFavoriteModal } from "../events/favoriteFormHandler.js";
+import { fetchWithRetry } from "../utils/fetchWithRetry.js";
+import { showToast } from "../UI/notifications.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 const id = urlParams.get('id');
@@ -9,25 +11,43 @@ const type = urlParams.get('type');
 let currentItem = null;
 
 async function loadDetail() {
+    const container = document.getElementById('detail-content');
+    
+    if (!id || !type) {
+        container.innerHTML = '<p class="error-message">Invalid item ID or type</p>';
+        return;
+    }
+    
     try {
-        const response = await fetch(`https://api.jikan.moe/v4/${type}/${id}`);
-        const data = await response.json();
-        const item = data.data;
-        currentItem = item;
+        container.innerHTML = '<div class="loading-spinner"></div>';
         
-        const title = type === 'people' ? item.name : item.title;
-        const imageUrl = item.images?.jpg?.image_url;
+        const data = await fetchWithRetry(`https://api.jikan.moe/v4/${type}/${id}`, {}, 3, 1000);
         
-        addToHistory(type, item.mal_id, title, imageUrl, {
-            score: item.score,
-            episodes: item.episodes,
-            status: item.status
+        if (!data.data) {
+            throw new Error("Item not found");
+        }
+        
+        currentItem = data.data;
+        
+        const title = type === 'people' ? data.data.name : data.data.title;
+        const imageUrl = data.data.images?.jpg?.image_url;
+        
+        addToHistory(type, data.data.mal_id, title, imageUrl, {
+            score: data.data.score,
+            episodes: data.data.episodes,
+            status: data.data.status
         });
 
-        displayDetail(item);
+        displayDetail(data.data);
     } catch (error) {
-        document.getElementById('detail-content').innerHTML = '<p>Error loading details</p>';
-        console.error(error);
+        console.error('Error loading detail:', error);
+        container.innerHTML = `
+            <div class="error-message">
+                <i class="fas fa-exclamation-triangle"></i> 
+                Error loading details. Please try again later.
+            </div>
+        `;
+        showToast("Failed to load item details", "error");
     }
 }
 
@@ -53,9 +73,7 @@ function displayDetail(item) {
     }
 
     container.innerHTML = `    
-
     <div class="detail-layout">
-
         <button class="back-btn" id="back-btn">
             <i class="fas fa-arrow-left"></i>
         </button>
@@ -103,7 +121,6 @@ function displayDetail(item) {
             </div>
             ` : ''}
         </div>
-
     </div>
     `;
     
@@ -111,7 +128,6 @@ function displayDetail(item) {
     if (favBtn) {
         favBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            
             openFavoriteModal({
                 id: favBtn.dataset.id,
                 type: favBtn.dataset.type,
@@ -124,7 +140,7 @@ function displayDetail(item) {
 
 function setupDetailEvents() {
     document.addEventListener("click", (e) => {
-        if (e.target.id === "back-btn") {
+        if (e.target.id === "back-btn" || e.target.closest('#back-btn')) {
             window.history.back();
         }
     });
