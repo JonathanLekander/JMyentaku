@@ -41,8 +41,16 @@ function displayDetail(item) {
 
     const trailerUrl = item.trailer?.embed_url || null;
     
-    // Verificar 
     const isFav = isFavorite(item.mal_id.toString(), type);
+
+    let yearText = '';
+    if (type === 'anime' && item.aired?.from) {
+        yearText = new Date(item.aired.from).getFullYear();
+    } else if (type === 'manga' && item.published?.from) {
+        yearText = new Date(item.published.from).getFullYear();
+    } else if (item.year) {
+        yearText = item.year;
+    }
 
     container.innerHTML = `    
 
@@ -52,11 +60,9 @@ function displayDetail(item) {
             <i class="fas fa-arrow-left"></i>
         </button>
         
-        <!-- IMAGEN + STATS -->
         <div class="aside-detail">
             <img src="${image}" alt="${title}">
 
-            <!-- Botón de favoritos -->
             <button class="detail-fav-btn ${isFav ? 'active' : ''}" 
                     data-id="${item.mal_id}" 
                     data-type="${type}"
@@ -70,15 +76,19 @@ function displayDetail(item) {
                 ${item.score ? `<p><i class="fas fa-star"></i> <strong>Score:</strong> <span class="stat-value">${item.score}</span></p>` : ''}
                 ${item.popularity ? `<p><i class="fas fa-chart-line"></i> <strong>Popularity:</strong> <span class="stat-value">#${item.popularity}</span></p>` : ''}
                 ${item.favorites ? `<p><i class="fas fa-heart"></i> <strong>Favorites:</strong> <span class="stat-value">${item.favorites.toLocaleString()}</span></p>` : ''}
-                ${item.episodes ? `<p><i class="fas fa-play-circle"></i> <strong>Episodes:</strong> <span class="stat-value">${item.episodes}</span></p>` : ''}
+                
+                ${type === 'anime' && item.episodes ? `<p><i class="fas fa-play-circle"></i> <strong>Episodes:</strong> <span class="stat-value">${item.episodes}</span></p>` : ''}
+                ${type === 'manga' && item.chapters ? `<p><i class="fas fa-book-open"></i> <strong>Chapters:</strong> <span class="stat-value">${item.chapters}</span></p>` : ''}
+                ${type === 'manga' && item.volumes ? `<p><i class="fas fa-book"></i> <strong>Volumes:</strong> <span class="stat-value">${item.volumes}</span></p>` : ''}
+                
                 ${item.duration ? `<p><i class="fas fa-clock"></i> <strong>Duration:</strong> <span class="stat-value">${item.duration}</span></p>` : ''}
                 ${item.rank ? `<p><i class="fas fa-trophy"></i> <strong>Rank:</strong> <span class="stat-value">#${item.rank}</span></p>` : ''}
                 ${item.status ? `<p><i class="fas fa-info-circle"></i> <strong>Status:</strong> <span class="stat-value">${item.status}</span></p>` : ''}
-                ${item.year ? `<p><i class="fas fa-calendar"></i> <strong>Year:</strong> <span class="stat-value">${item.year}</span></p>` : ''}
+                
+                ${yearText ? `<p><i class="fas fa-calendar"></i> <strong>${type === 'anime' ? 'Aired:' : 'Published:'}</strong> <span class="stat-value">${yearText}</span></p>` : ''}
             </div>
         </div>
 
-        <!-- TEXTO + TRAILER -->
         <div class="detail">
             <h1>${title}</h1>
             ${item.title_japanese ? `<p class="japanese-title">${item.title_japanese}</p>` : ''}
@@ -97,7 +107,6 @@ function displayDetail(item) {
     </div>
     `;
     
-   
     const favBtn = document.querySelector('.detail-fav-btn');
     if (favBtn) {
         favBtn.addEventListener('click', (e) => {
@@ -124,7 +133,6 @@ function setupDetailEvents() {
 window.addEventListener('favoriteAdded', (e) => {
     const { id, type: favType } = e.detail;
     
-    // verificar si el favorito agregado corresponde al item actual
     if (id === currentItem?.mal_id?.toString() && favType === type) {
         const favBtn = document.querySelector('.detail-fav-btn');
         if (favBtn) {
