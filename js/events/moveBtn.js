@@ -63,7 +63,7 @@ function setupItemClick() {
 
         if (!id || !type) return;
 
-        window.location.href = `detail.html?id=${id}&type=${type}`;
+         window.location.href = `/JMyentaku/html/detail.html?id=${id}&type=${type}`
     });
 }
 
